@@ -82,7 +82,7 @@ function ProviderPage() {
             </Section>
             <Section title="Skills">
               <div className="flex flex-wrap gap-2">
-                {p.skills.map((s) => <span key={s} className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-medium">{s}</span>)}
+                {p.skills.map((s: string) => <span key={s} className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-medium">{s}</span>)}
               </div>
             </Section>
             <Section title="Portfolio">
