@@ -9,38 +9,523 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ProviderRouteImport } from './routes/provider'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as FindProfessionalsRouteImport } from './routes/find-professionals'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as BecomeAProviderRouteImport } from './routes/become-a-provider'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProviderIndexRouteImport } from './routes/provider.index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as ProvidersIdRouteImport } from './routes/providers.$id'
+import { Route as ProviderWalletRouteImport } from './routes/provider.wallet'
+import { Route as ProviderSettingsRouteImport } from './routes/provider.settings'
+import { Route as ProviderPortfolioRouteImport } from './routes/provider.portfolio'
+import { Route as ProviderMessagesRouteImport } from './routes/provider.messages'
+import { Route as ProviderBookingsRouteImport } from './routes/provider.bookings'
+import { Route as ProviderAvailabilityRouteImport } from './routes/provider.availability'
+import { Route as ProviderAnalyticsRouteImport } from './routes/provider.analytics'
+import { Route as DashboardWalletRouteImport } from './routes/dashboard.wallet'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardSavedRouteImport } from './routes/dashboard.saved'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
+import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
+import { Route as DashboardBookingsRouteImport } from './routes/dashboard.bookings'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProviderRoute = ProviderRouteImport.update({
+  id: '/provider',
+  path: '/provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindProfessionalsRoute = FindProfessionalsRouteImport.update({
+  id: '/find-professionals',
+  path: '/find-professionals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesRoute = CategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeAProviderRoute = BecomeAProviderRouteImport.update({
+  id: '/become-a-provider',
+  path: '/become-a-provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProviderIndexRoute = ProviderIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const ProvidersIdRoute = ProvidersIdRouteImport.update({
+  id: '/providers/$id',
+  path: '/providers/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProviderWalletRoute = ProviderWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderSettingsRoute = ProviderSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderPortfolioRoute = ProviderPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderMessagesRoute = ProviderMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderBookingsRoute = ProviderBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderAvailabilityRoute = ProviderAvailabilityRouteImport.update({
+  id: '/availability',
+  path: '/availability',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderAnalyticsRoute = ProviderAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const DashboardWalletRoute = DashboardWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSavedRoute = DashboardSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMessagesRoute = DashboardMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/become-a-provider': typeof BecomeAProviderRoute
+  '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/faq': typeof FaqRoute
+  '/find-professionals': typeof FindProfessionalsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
+  '/provider': typeof ProviderRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/provider/analytics': typeof ProviderAnalyticsRoute
+  '/provider/availability': typeof ProviderAvailabilityRoute
+  '/provider/bookings': typeof ProviderBookingsRoute
+  '/provider/messages': typeof ProviderMessagesRoute
+  '/provider/portfolio': typeof ProviderPortfolioRoute
+  '/provider/settings': typeof ProviderSettingsRoute
+  '/provider/wallet': typeof ProviderWalletRoute
+  '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/provider/': typeof ProviderIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/become-a-provider': typeof BecomeAProviderRoute
+  '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/find-professionals': typeof FindProfessionalsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/provider/analytics': typeof ProviderAnalyticsRoute
+  '/provider/availability': typeof ProviderAvailabilityRoute
+  '/provider/bookings': typeof ProviderBookingsRoute
+  '/provider/messages': typeof ProviderMessagesRoute
+  '/provider/portfolio': typeof ProviderPortfolioRoute
+  '/provider/settings': typeof ProviderSettingsRoute
+  '/provider/wallet': typeof ProviderWalletRoute
+  '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/provider': typeof ProviderIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/become-a-provider': typeof BecomeAProviderRoute
+  '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/faq': typeof FaqRoute
+  '/find-professionals': typeof FindProfessionalsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
+  '/provider': typeof ProviderRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
+  '/provider/analytics': typeof ProviderAnalyticsRoute
+  '/provider/availability': typeof ProviderAvailabilityRoute
+  '/provider/bookings': typeof ProviderBookingsRoute
+  '/provider/messages': typeof ProviderMessagesRoute
+  '/provider/portfolio': typeof ProviderPortfolioRoute
+  '/provider/settings': typeof ProviderSettingsRoute
+  '/provider/wallet': typeof ProviderWalletRoute
+  '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/provider/': typeof ProviderIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/become-a-provider'
+    | '/categories'
+    | '/contact'
+    | '/dashboard'
+    | '/faq'
+    | '/find-professionals'
+    | '/forgot-password'
+    | '/how-it-works'
+    | '/login'
+    | '/privacy'
+    | '/provider'
+    | '/signup'
+    | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
+    | '/provider/analytics'
+    | '/provider/availability'
+    | '/provider/bookings'
+    | '/provider/messages'
+    | '/provider/portfolio'
+    | '/provider/settings'
+    | '/provider/wallet'
+    | '/providers/$id'
+    | '/dashboard/'
+    | '/provider/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/become-a-provider'
+    | '/categories'
+    | '/contact'
+    | '/faq'
+    | '/find-professionals'
+    | '/forgot-password'
+    | '/how-it-works'
+    | '/login'
+    | '/privacy'
+    | '/signup'
+    | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
+    | '/provider/analytics'
+    | '/provider/availability'
+    | '/provider/bookings'
+    | '/provider/messages'
+    | '/provider/portfolio'
+    | '/provider/settings'
+    | '/provider/wallet'
+    | '/providers/$id'
+    | '/dashboard'
+    | '/provider'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/become-a-provider'
+    | '/categories'
+    | '/contact'
+    | '/dashboard'
+    | '/faq'
+    | '/find-professionals'
+    | '/forgot-password'
+    | '/how-it-works'
+    | '/login'
+    | '/privacy'
+    | '/provider'
+    | '/signup'
+    | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
+    | '/provider/analytics'
+    | '/provider/availability'
+    | '/provider/bookings'
+    | '/provider/messages'
+    | '/provider/portfolio'
+    | '/provider/settings'
+    | '/provider/wallet'
+    | '/providers/$id'
+    | '/dashboard/'
+    | '/provider/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BecomeAProviderRoute: typeof BecomeAProviderRoute
+  CategoriesRoute: typeof CategoriesRoute
+  ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  FaqRoute: typeof FaqRoute
+  FindProfessionalsRoute: typeof FindProfessionalsRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  HowItWorksRoute: typeof HowItWorksRoute
+  LoginRoute: typeof LoginRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ProviderRoute: typeof ProviderRouteWithChildren
+  SignupRoute: typeof SignupRoute
+  TermsRoute: typeof TermsRoute
+  ProvidersIdRoute: typeof ProvidersIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/provider': {
+      id: '/provider'
+      path: '/provider'
+      fullPath: '/provider'
+      preLoaderRoute: typeof ProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/find-professionals': {
+      id: '/find-professionals'
+      path: '/find-professionals'
+      fullPath: '/find-professionals'
+      preLoaderRoute: typeof FindProfessionalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories': {
+      id: '/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-a-provider': {
+      id: '/become-a-provider'
+      path: '/become-a-provider'
+      fullPath: '/become-a-provider'
+      preLoaderRoute: typeof BecomeAProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +533,198 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/provider/': {
+      id: '/provider/'
+      path: '/'
+      fullPath: '/provider/'
+      preLoaderRoute: typeof ProviderIndexRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/providers/$id': {
+      id: '/providers/$id'
+      path: '/providers/$id'
+      fullPath: '/providers/$id'
+      preLoaderRoute: typeof ProvidersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/provider/wallet': {
+      id: '/provider/wallet'
+      path: '/wallet'
+      fullPath: '/provider/wallet'
+      preLoaderRoute: typeof ProviderWalletRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/settings': {
+      id: '/provider/settings'
+      path: '/settings'
+      fullPath: '/provider/settings'
+      preLoaderRoute: typeof ProviderSettingsRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/portfolio': {
+      id: '/provider/portfolio'
+      path: '/portfolio'
+      fullPath: '/provider/portfolio'
+      preLoaderRoute: typeof ProviderPortfolioRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/messages': {
+      id: '/provider/messages'
+      path: '/messages'
+      fullPath: '/provider/messages'
+      preLoaderRoute: typeof ProviderMessagesRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/bookings': {
+      id: '/provider/bookings'
+      path: '/bookings'
+      fullPath: '/provider/bookings'
+      preLoaderRoute: typeof ProviderBookingsRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/availability': {
+      id: '/provider/availability'
+      path: '/availability'
+      fullPath: '/provider/availability'
+      preLoaderRoute: typeof ProviderAvailabilityRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/analytics': {
+      id: '/provider/analytics'
+      path: '/analytics'
+      fullPath: '/provider/analytics'
+      preLoaderRoute: typeof ProviderAnalyticsRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/dashboard/wallet': {
+      id: '/dashboard/wallet'
+      path: '/wallet'
+      fullPath: '/dashboard/wallet'
+      preLoaderRoute: typeof DashboardWalletRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/saved': {
+      id: '/dashboard/saved'
+      path: '/saved'
+      fullPath: '/dashboard/saved'
+      preLoaderRoute: typeof DashboardSavedRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/messages': {
+      id: '/dashboard/messages'
+      path: '/messages'
+      fullPath: '/dashboard/messages'
+      preLoaderRoute: typeof DashboardMessagesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/bookings': {
+      id: '/dashboard/bookings'
+      path: '/bookings'
+      fullPath: '/dashboard/bookings'
+      preLoaderRoute: typeof DashboardBookingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardBookingsRoute: typeof DashboardBookingsRoute
+  DashboardMessagesRoute: typeof DashboardMessagesRoute
+  DashboardNotificationsRoute: typeof DashboardNotificationsRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardSavedRoute: typeof DashboardSavedRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardWalletRoute: typeof DashboardWalletRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardBookingsRoute: DashboardBookingsRoute,
+  DashboardMessagesRoute: DashboardMessagesRoute,
+  DashboardNotificationsRoute: DashboardNotificationsRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardSavedRoute: DashboardSavedRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardWalletRoute: DashboardWalletRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface ProviderRouteChildren {
+  ProviderAnalyticsRoute: typeof ProviderAnalyticsRoute
+  ProviderAvailabilityRoute: typeof ProviderAvailabilityRoute
+  ProviderBookingsRoute: typeof ProviderBookingsRoute
+  ProviderMessagesRoute: typeof ProviderMessagesRoute
+  ProviderPortfolioRoute: typeof ProviderPortfolioRoute
+  ProviderSettingsRoute: typeof ProviderSettingsRoute
+  ProviderWalletRoute: typeof ProviderWalletRoute
+  ProviderIndexRoute: typeof ProviderIndexRoute
+}
+
+const ProviderRouteChildren: ProviderRouteChildren = {
+  ProviderAnalyticsRoute: ProviderAnalyticsRoute,
+  ProviderAvailabilityRoute: ProviderAvailabilityRoute,
+  ProviderBookingsRoute: ProviderBookingsRoute,
+  ProviderMessagesRoute: ProviderMessagesRoute,
+  ProviderPortfolioRoute: ProviderPortfolioRoute,
+  ProviderSettingsRoute: ProviderSettingsRoute,
+  ProviderWalletRoute: ProviderWalletRoute,
+  ProviderIndexRoute: ProviderIndexRoute,
+}
+
+const ProviderRouteWithChildren = ProviderRoute._addFileChildren(
+  ProviderRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BecomeAProviderRoute: BecomeAProviderRoute,
+  CategoriesRoute: CategoriesRoute,
+  ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  FaqRoute: FaqRoute,
+  FindProfessionalsRoute: FindProfessionalsRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  HowItWorksRoute: HowItWorksRoute,
+  LoginRoute: LoginRoute,
+  PrivacyRoute: PrivacyRoute,
+  ProviderRoute: ProviderRouteWithChildren,
+  SignupRoute: SignupRoute,
+  TermsRoute: TermsRoute,
+  ProvidersIdRoute: ProvidersIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
