@@ -17,12 +17,21 @@ import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FindProfessionalsRouteImport } from './routes/find-professionals'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BecomeAProviderRouteImport } from './routes/become-a-provider'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as ProvidersIdRouteImport } from './routes/providers.$id'
+import { Route as DashboardWalletRouteImport } from './routes/dashboard.wallet'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardSavedRouteImport } from './routes/dashboard.saved'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile'
+import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
+import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
+import { Route as DashboardBookingsRouteImport } from './routes/dashboard.bookings'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -64,6 +73,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -89,10 +103,50 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ProvidersIdRoute = ProvidersIdRouteImport.update({
   id: '/providers/$id',
   path: '/providers/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardWalletRoute = DashboardWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSavedRoute = DashboardSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMessagesRoute = DashboardMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => DashboardRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -101,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
   '/find-professionals': typeof FindProfessionalsRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -109,7 +164,15 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,7 +188,15 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +205,7 @@ export interface FileRoutesById {
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
   '/find-professionals': typeof FindProfessionalsRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -142,7 +214,15 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/messages': typeof DashboardMessagesRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/saved': typeof DashboardSavedRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/wallet': typeof DashboardWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -152,6 +232,7 @@ export interface FileRouteTypes {
     | '/become-a-provider'
     | '/categories'
     | '/contact'
+    | '/dashboard'
     | '/faq'
     | '/find-professionals'
     | '/forgot-password'
@@ -160,7 +241,15 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
     | '/providers/$id'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -176,7 +265,15 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
     | '/providers/$id'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -184,6 +281,7 @@ export interface FileRouteTypes {
     | '/become-a-provider'
     | '/categories'
     | '/contact'
+    | '/dashboard'
     | '/faq'
     | '/find-professionals'
     | '/forgot-password'
@@ -192,7 +290,15 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/signup'
     | '/terms'
+    | '/dashboard/bookings'
+    | '/dashboard/messages'
+    | '/dashboard/notifications'
+    | '/dashboard/profile'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard/wallet'
     | '/providers/$id'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -201,6 +307,7 @@ export interface RootRouteChildren {
   BecomeAProviderRoute: typeof BecomeAProviderRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   FaqRoute: typeof FaqRoute
   FindProfessionalsRoute: typeof FindProfessionalsRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
@@ -270,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -305,6 +419,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/providers/$id': {
       id: '/providers/$id'
       path: '/providers/$id'
@@ -312,8 +433,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProvidersIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/wallet': {
+      id: '/dashboard/wallet'
+      path: '/wallet'
+      fullPath: '/dashboard/wallet'
+      preLoaderRoute: typeof DashboardWalletRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/saved': {
+      id: '/dashboard/saved'
+      path: '/saved'
+      fullPath: '/dashboard/saved'
+      preLoaderRoute: typeof DashboardSavedRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/messages': {
+      id: '/dashboard/messages'
+      path: '/messages'
+      fullPath: '/dashboard/messages'
+      preLoaderRoute: typeof DashboardMessagesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/bookings': {
+      id: '/dashboard/bookings'
+      path: '/bookings'
+      fullPath: '/dashboard/bookings'
+      preLoaderRoute: typeof DashboardBookingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
+
+interface DashboardRouteChildren {
+  DashboardBookingsRoute: typeof DashboardBookingsRoute
+  DashboardMessagesRoute: typeof DashboardMessagesRoute
+  DashboardNotificationsRoute: typeof DashboardNotificationsRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardSavedRoute: typeof DashboardSavedRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardWalletRoute: typeof DashboardWalletRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardBookingsRoute: DashboardBookingsRoute,
+  DashboardMessagesRoute: DashboardMessagesRoute,
+  DashboardNotificationsRoute: DashboardNotificationsRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardSavedRoute: DashboardSavedRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardWalletRoute: DashboardWalletRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -321,6 +517,7 @@ const rootRouteChildren: RootRouteChildren = {
   BecomeAProviderRoute: BecomeAProviderRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   FaqRoute: FaqRoute,
   FindProfessionalsRoute: FindProfessionalsRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
