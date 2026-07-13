@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as SuperAdminRouteImport } from './routes/super-admin'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProviderRouteImport } from './routes/provider'
@@ -23,11 +25,27 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BecomeAProviderRouteImport } from './routes/become-a-provider'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SupportIndexRouteImport } from './routes/support.index'
+import { Route as SuperAdminIndexRouteImport } from './routes/super-admin.index'
 import { Route as ProviderIndexRouteImport } from './routes/provider.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SupportUsersRouteImport } from './routes/support.users'
+import { Route as SupportTicketsRouteImport } from './routes/support.tickets'
+import { Route as SupportReportsRouteImport } from './routes/support.reports'
+import { Route as SupportFaqsRouteImport } from './routes/support.faqs'
+import { Route as SupportDisputesRouteImport } from './routes/support.disputes'
+import { Route as SuperAdminUsersRouteImport } from './routes/super-admin.users'
+import { Route as SuperAdminTeamRouteImport } from './routes/super-admin.team'
+import { Route as SuperAdminSettingsRouteImport } from './routes/super-admin.settings'
+import { Route as SuperAdminSecurityRouteImport } from './routes/super-admin.security'
+import { Route as SuperAdminFeaturesRouteImport } from './routes/super-admin.features'
+import { Route as SuperAdminBackupsRouteImport } from './routes/super-admin.backups'
+import { Route as SuperAdminApplicationsRouteImport } from './routes/super-admin.applications'
 import { Route as ProvidersIdRouteImport } from './routes/providers.$id'
 import { Route as ProviderWalletRouteImport } from './routes/provider.wallet'
 import { Route as ProviderSettingsRouteImport } from './routes/provider.settings'
@@ -43,10 +61,26 @@ import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile
 import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
 import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
 import { Route as DashboardBookingsRouteImport } from './routes/dashboard.bookings'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminContentRouteImport } from './routes/admin.content'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
+import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperAdminRoute = SuperAdminRouteImport.update({
+  id: '/super-admin',
+  path: '/super-admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -114,6 +148,11 @@ const BecomeAProviderRoute = BecomeAProviderRouteImport.update({
   path: '/become-a-provider',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccessDeniedRoute = AccessDeniedRouteImport.update({
   id: '/access-denied',
   path: '/access-denied',
@@ -129,6 +168,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportIndexRoute = SupportIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SuperAdminIndexRoute = SuperAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
 const ProviderIndexRoute = ProviderIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -138,6 +187,71 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const SupportUsersRoute = SupportUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportTicketsRoute = SupportTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportReportsRoute = SupportReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportFaqsRoute = SupportFaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SupportDisputesRoute = SupportDisputesRouteImport.update({
+  id: '/disputes',
+  path: '/disputes',
+  getParentRoute: () => SupportRoute,
+} as any)
+const SuperAdminUsersRoute = SuperAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminTeamRoute = SuperAdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminSettingsRoute = SuperAdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminSecurityRoute = SuperAdminSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminFeaturesRoute = SuperAdminFeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminBackupsRoute = SuperAdminBackupsRouteImport.update({
+  id: '/backups',
+  path: '/backups',
+  getParentRoute: () => SuperAdminRoute,
+} as any)
+const SuperAdminApplicationsRoute = SuperAdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => SuperAdminRoute,
 } as any)
 const ProvidersIdRoute = ProvidersIdRouteImport.update({
   id: '/providers/$id',
@@ -214,11 +328,42 @@ const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => DashboardRoute,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContentRoute = AdminContentRouteImport.update({
+  id: '/content',
+  path: '/content',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/access-denied': typeof AccessDeniedRoute
+  '/admin': typeof AdminRouteWithChildren
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -232,7 +377,15 @@ export interface FileRoutesByFullPath {
   '/provider': typeof ProviderRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/super-admin': typeof SuperAdminRouteWithChildren
+  '/support': typeof SupportRouteWithChildren
   '/terms': typeof TermsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -248,8 +401,23 @@ export interface FileRoutesByFullPath {
   '/provider/settings': typeof ProviderSettingsRoute
   '/provider/wallet': typeof ProviderWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/super-admin/applications': typeof SuperAdminApplicationsRoute
+  '/super-admin/backups': typeof SuperAdminBackupsRoute
+  '/super-admin/features': typeof SuperAdminFeaturesRoute
+  '/super-admin/security': typeof SuperAdminSecurityRoute
+  '/super-admin/settings': typeof SuperAdminSettingsRoute
+  '/super-admin/team': typeof SuperAdminTeamRoute
+  '/super-admin/users': typeof SuperAdminUsersRoute
+  '/support/disputes': typeof SupportDisputesRoute
+  '/support/faqs': typeof SupportFaqsRoute
+  '/support/reports': typeof SupportReportsRoute
+  '/support/tickets': typeof SupportTicketsRoute
+  '/support/users': typeof SupportUsersRoute
+  '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/provider/': typeof ProviderIndexRoute
+  '/super-admin/': typeof SuperAdminIndexRoute
+  '/support/': typeof SupportIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -267,6 +435,12 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -282,14 +456,30 @@ export interface FileRoutesByTo {
   '/provider/settings': typeof ProviderSettingsRoute
   '/provider/wallet': typeof ProviderWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/super-admin/applications': typeof SuperAdminApplicationsRoute
+  '/super-admin/backups': typeof SuperAdminBackupsRoute
+  '/super-admin/features': typeof SuperAdminFeaturesRoute
+  '/super-admin/security': typeof SuperAdminSecurityRoute
+  '/super-admin/settings': typeof SuperAdminSettingsRoute
+  '/super-admin/team': typeof SuperAdminTeamRoute
+  '/super-admin/users': typeof SuperAdminUsersRoute
+  '/support/disputes': typeof SupportDisputesRoute
+  '/support/faqs': typeof SupportFaqsRoute
+  '/support/reports': typeof SupportReportsRoute
+  '/support/tickets': typeof SupportTicketsRoute
+  '/support/users': typeof SupportUsersRoute
+  '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/provider': typeof ProviderIndexRoute
+  '/super-admin': typeof SuperAdminIndexRoute
+  '/support': typeof SupportIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/access-denied': typeof AccessDeniedRoute
+  '/admin': typeof AdminRouteWithChildren
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -303,7 +493,15 @@ export interface FileRoutesById {
   '/provider': typeof ProviderRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/super-admin': typeof SuperAdminRouteWithChildren
+  '/support': typeof SupportRouteWithChildren
   '/terms': typeof TermsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -319,8 +517,23 @@ export interface FileRoutesById {
   '/provider/settings': typeof ProviderSettingsRoute
   '/provider/wallet': typeof ProviderWalletRoute
   '/providers/$id': typeof ProvidersIdRoute
+  '/super-admin/applications': typeof SuperAdminApplicationsRoute
+  '/super-admin/backups': typeof SuperAdminBackupsRoute
+  '/super-admin/features': typeof SuperAdminFeaturesRoute
+  '/super-admin/security': typeof SuperAdminSecurityRoute
+  '/super-admin/settings': typeof SuperAdminSettingsRoute
+  '/super-admin/team': typeof SuperAdminTeamRoute
+  '/super-admin/users': typeof SuperAdminUsersRoute
+  '/support/disputes': typeof SupportDisputesRoute
+  '/support/faqs': typeof SupportFaqsRoute
+  '/support/reports': typeof SupportReportsRoute
+  '/support/tickets': typeof SupportTicketsRoute
+  '/support/users': typeof SupportUsersRoute
+  '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/provider/': typeof ProviderIndexRoute
+  '/super-admin/': typeof SuperAdminIndexRoute
+  '/support/': typeof SupportIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -328,6 +541,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/access-denied'
+    | '/admin'
     | '/become-a-provider'
     | '/categories'
     | '/contact'
@@ -341,7 +555,15 @@ export interface FileRouteTypes {
     | '/provider'
     | '/reset-password'
     | '/signup'
+    | '/super-admin'
+    | '/support'
     | '/terms'
+    | '/admin/announcements'
+    | '/admin/applications'
+    | '/admin/categories'
+    | '/admin/content'
+    | '/admin/reports'
+    | '/admin/users'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -357,8 +579,23 @@ export interface FileRouteTypes {
     | '/provider/settings'
     | '/provider/wallet'
     | '/providers/$id'
+    | '/super-admin/applications'
+    | '/super-admin/backups'
+    | '/super-admin/features'
+    | '/super-admin/security'
+    | '/super-admin/settings'
+    | '/super-admin/team'
+    | '/super-admin/users'
+    | '/support/disputes'
+    | '/support/faqs'
+    | '/support/reports'
+    | '/support/tickets'
+    | '/support/users'
+    | '/admin/'
     | '/dashboard/'
     | '/provider/'
+    | '/super-admin/'
+    | '/support/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -376,6 +613,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/terms'
+    | '/admin/announcements'
+    | '/admin/applications'
+    | '/admin/categories'
+    | '/admin/content'
+    | '/admin/reports'
+    | '/admin/users'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -391,13 +634,29 @@ export interface FileRouteTypes {
     | '/provider/settings'
     | '/provider/wallet'
     | '/providers/$id'
+    | '/super-admin/applications'
+    | '/super-admin/backups'
+    | '/super-admin/features'
+    | '/super-admin/security'
+    | '/super-admin/settings'
+    | '/super-admin/team'
+    | '/super-admin/users'
+    | '/support/disputes'
+    | '/support/faqs'
+    | '/support/reports'
+    | '/support/tickets'
+    | '/support/users'
+    | '/admin'
     | '/dashboard'
     | '/provider'
+    | '/super-admin'
+    | '/support'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/access-denied'
+    | '/admin'
     | '/become-a-provider'
     | '/categories'
     | '/contact'
@@ -411,7 +670,15 @@ export interface FileRouteTypes {
     | '/provider'
     | '/reset-password'
     | '/signup'
+    | '/super-admin'
+    | '/support'
     | '/terms'
+    | '/admin/announcements'
+    | '/admin/applications'
+    | '/admin/categories'
+    | '/admin/content'
+    | '/admin/reports'
+    | '/admin/users'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -427,14 +694,30 @@ export interface FileRouteTypes {
     | '/provider/settings'
     | '/provider/wallet'
     | '/providers/$id'
+    | '/super-admin/applications'
+    | '/super-admin/backups'
+    | '/super-admin/features'
+    | '/super-admin/security'
+    | '/super-admin/settings'
+    | '/super-admin/team'
+    | '/super-admin/users'
+    | '/support/disputes'
+    | '/support/faqs'
+    | '/support/reports'
+    | '/support/tickets'
+    | '/support/users'
+    | '/admin/'
     | '/dashboard/'
     | '/provider/'
+    | '/super-admin/'
+    | '/support/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccessDeniedRoute: typeof AccessDeniedRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BecomeAProviderRoute: typeof BecomeAProviderRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
@@ -448,6 +731,8 @@ export interface RootRouteChildren {
   ProviderRoute: typeof ProviderRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  SuperAdminRoute: typeof SuperAdminRouteWithChildren
+  SupportRoute: typeof SupportRouteWithChildren
   TermsRoute: typeof TermsRoute
   ProvidersIdRoute: typeof ProvidersIdRoute
 }
@@ -459,6 +744,20 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/super-admin': {
+      id: '/super-admin'
+      path: '/super-admin'
+      fullPath: '/super-admin'
+      preLoaderRoute: typeof SuperAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -552,6 +851,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BecomeAProviderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/access-denied': {
       id: '/access-denied'
       path: '/access-denied'
@@ -573,6 +879,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support/': {
+      id: '/support/'
+      path: '/'
+      fullPath: '/support/'
+      preLoaderRoute: typeof SupportIndexRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/super-admin/': {
+      id: '/super-admin/'
+      path: '/'
+      fullPath: '/super-admin/'
+      preLoaderRoute: typeof SuperAdminIndexRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
     '/provider/': {
       id: '/provider/'
       path: '/'
@@ -586,6 +906,97 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/support/users': {
+      id: '/support/users'
+      path: '/users'
+      fullPath: '/support/users'
+      preLoaderRoute: typeof SupportUsersRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/tickets': {
+      id: '/support/tickets'
+      path: '/tickets'
+      fullPath: '/support/tickets'
+      preLoaderRoute: typeof SupportTicketsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/reports': {
+      id: '/support/reports'
+      path: '/reports'
+      fullPath: '/support/reports'
+      preLoaderRoute: typeof SupportReportsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/faqs': {
+      id: '/support/faqs'
+      path: '/faqs'
+      fullPath: '/support/faqs'
+      preLoaderRoute: typeof SupportFaqsRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/support/disputes': {
+      id: '/support/disputes'
+      path: '/disputes'
+      fullPath: '/support/disputes'
+      preLoaderRoute: typeof SupportDisputesRouteImport
+      parentRoute: typeof SupportRoute
+    }
+    '/super-admin/users': {
+      id: '/super-admin/users'
+      path: '/users'
+      fullPath: '/super-admin/users'
+      preLoaderRoute: typeof SuperAdminUsersRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/team': {
+      id: '/super-admin/team'
+      path: '/team'
+      fullPath: '/super-admin/team'
+      preLoaderRoute: typeof SuperAdminTeamRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/settings': {
+      id: '/super-admin/settings'
+      path: '/settings'
+      fullPath: '/super-admin/settings'
+      preLoaderRoute: typeof SuperAdminSettingsRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/security': {
+      id: '/super-admin/security'
+      path: '/security'
+      fullPath: '/super-admin/security'
+      preLoaderRoute: typeof SuperAdminSecurityRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/features': {
+      id: '/super-admin/features'
+      path: '/features'
+      fullPath: '/super-admin/features'
+      preLoaderRoute: typeof SuperAdminFeaturesRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/backups': {
+      id: '/super-admin/backups'
+      path: '/backups'
+      fullPath: '/super-admin/backups'
+      preLoaderRoute: typeof SuperAdminBackupsRouteImport
+      parentRoute: typeof SuperAdminRoute
+    }
+    '/super-admin/applications': {
+      id: '/super-admin/applications'
+      path: '/applications'
+      fullPath: '/super-admin/applications'
+      preLoaderRoute: typeof SuperAdminApplicationsRouteImport
+      parentRoute: typeof SuperAdminRoute
     }
     '/providers/$id': {
       id: '/providers/$id'
@@ -692,8 +1103,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBookingsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/content': {
+      id: '/admin/content'
+      path: '/content'
+      fullPath: '/admin/content'
+      preLoaderRoute: typeof AdminContentRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/applications': {
+      id: '/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminApplicationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/announcements': {
+      id: '/admin/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AdminAnnouncementsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminAnnouncementsRoute: typeof AdminAnnouncementsRoute
+  AdminApplicationsRoute: typeof AdminApplicationsRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminContentRoute: typeof AdminContentRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnnouncementsRoute: AdminAnnouncementsRoute,
+  AdminApplicationsRoute: AdminApplicationsRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminContentRoute: AdminContentRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface DashboardRouteChildren {
   DashboardBookingsRoute: typeof DashboardBookingsRoute
@@ -747,10 +1222,58 @@ const ProviderRouteWithChildren = ProviderRoute._addFileChildren(
   ProviderRouteChildren,
 )
 
+interface SuperAdminRouteChildren {
+  SuperAdminApplicationsRoute: typeof SuperAdminApplicationsRoute
+  SuperAdminBackupsRoute: typeof SuperAdminBackupsRoute
+  SuperAdminFeaturesRoute: typeof SuperAdminFeaturesRoute
+  SuperAdminSecurityRoute: typeof SuperAdminSecurityRoute
+  SuperAdminSettingsRoute: typeof SuperAdminSettingsRoute
+  SuperAdminTeamRoute: typeof SuperAdminTeamRoute
+  SuperAdminUsersRoute: typeof SuperAdminUsersRoute
+  SuperAdminIndexRoute: typeof SuperAdminIndexRoute
+}
+
+const SuperAdminRouteChildren: SuperAdminRouteChildren = {
+  SuperAdminApplicationsRoute: SuperAdminApplicationsRoute,
+  SuperAdminBackupsRoute: SuperAdminBackupsRoute,
+  SuperAdminFeaturesRoute: SuperAdminFeaturesRoute,
+  SuperAdminSecurityRoute: SuperAdminSecurityRoute,
+  SuperAdminSettingsRoute: SuperAdminSettingsRoute,
+  SuperAdminTeamRoute: SuperAdminTeamRoute,
+  SuperAdminUsersRoute: SuperAdminUsersRoute,
+  SuperAdminIndexRoute: SuperAdminIndexRoute,
+}
+
+const SuperAdminRouteWithChildren = SuperAdminRoute._addFileChildren(
+  SuperAdminRouteChildren,
+)
+
+interface SupportRouteChildren {
+  SupportDisputesRoute: typeof SupportDisputesRoute
+  SupportFaqsRoute: typeof SupportFaqsRoute
+  SupportReportsRoute: typeof SupportReportsRoute
+  SupportTicketsRoute: typeof SupportTicketsRoute
+  SupportUsersRoute: typeof SupportUsersRoute
+  SupportIndexRoute: typeof SupportIndexRoute
+}
+
+const SupportRouteChildren: SupportRouteChildren = {
+  SupportDisputesRoute: SupportDisputesRoute,
+  SupportFaqsRoute: SupportFaqsRoute,
+  SupportReportsRoute: SupportReportsRoute,
+  SupportTicketsRoute: SupportTicketsRoute,
+  SupportUsersRoute: SupportUsersRoute,
+  SupportIndexRoute: SupportIndexRoute,
+}
+
+const SupportRouteWithChildren =
+  SupportRoute._addFileChildren(SupportRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccessDeniedRoute: AccessDeniedRoute,
+  AdminRoute: AdminRouteWithChildren,
   BecomeAProviderRoute: BecomeAProviderRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
@@ -764,6 +1287,8 @@ const rootRouteChildren: RootRouteChildren = {
   ProviderRoute: ProviderRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  SuperAdminRoute: SuperAdminRouteWithChildren,
+  SupportRoute: SupportRouteWithChildren,
   TermsRoute: TermsRoute,
   ProvidersIdRoute: ProvidersIdRoute,
 }
