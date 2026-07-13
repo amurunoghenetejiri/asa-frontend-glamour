@@ -61,6 +61,7 @@ import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile
 import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
 import { Route as DashboardMessagesRouteImport } from './routes/dashboard.messages'
 import { Route as DashboardBookingsRouteImport } from './routes/dashboard.bookings'
+import { Route as BecomeAProviderApplyRouteImport } from './routes/become-a-provider.apply'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
@@ -328,6 +329,11 @@ const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => DashboardRoute,
 } as any)
+const BecomeAProviderApplyRoute = BecomeAProviderApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => BecomeAProviderRoute,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -364,7 +370,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/access-denied': typeof AccessDeniedRoute
   '/admin': typeof AdminRouteWithChildren
-  '/become-a-provider': typeof BecomeAProviderRoute
+  '/become-a-provider': typeof BecomeAProviderRouteWithChildren
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
@@ -386,6 +392,7 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/become-a-provider/apply': typeof BecomeAProviderApplyRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -423,7 +430,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/access-denied': typeof AccessDeniedRoute
-  '/become-a-provider': typeof BecomeAProviderRoute
+  '/become-a-provider': typeof BecomeAProviderRouteWithChildren
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -441,6 +448,7 @@ export interface FileRoutesByTo {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/become-a-provider/apply': typeof BecomeAProviderApplyRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -480,7 +488,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/access-denied': typeof AccessDeniedRoute
   '/admin': typeof AdminRouteWithChildren
-  '/become-a-provider': typeof BecomeAProviderRoute
+  '/become-a-provider': typeof BecomeAProviderRouteWithChildren
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
@@ -502,6 +510,7 @@ export interface FileRoutesById {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/become-a-provider/apply': typeof BecomeAProviderApplyRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
   '/dashboard/messages': typeof DashboardMessagesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
@@ -564,6 +573,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/users'
+    | '/become-a-provider/apply'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -619,6 +629,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/users'
+    | '/become-a-provider/apply'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -679,6 +690,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/users'
+    | '/become-a-provider/apply'
     | '/dashboard/bookings'
     | '/dashboard/messages'
     | '/dashboard/notifications'
@@ -718,7 +730,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AccessDeniedRoute: typeof AccessDeniedRoute
   AdminRoute: typeof AdminRouteWithChildren
-  BecomeAProviderRoute: typeof BecomeAProviderRoute
+  BecomeAProviderRoute: typeof BecomeAProviderRouteWithChildren
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
@@ -1103,6 +1115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardBookingsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/become-a-provider/apply': {
+      id: '/become-a-provider/apply'
+      path: '/apply'
+      fullPath: '/become-a-provider/apply'
+      preLoaderRoute: typeof BecomeAProviderApplyRouteImport
+      parentRoute: typeof BecomeAProviderRoute
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/users'
@@ -1169,6 +1188,18 @@ const AdminRouteChildren: AdminRouteChildren = {
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface BecomeAProviderRouteChildren {
+  BecomeAProviderApplyRoute: typeof BecomeAProviderApplyRoute
+}
+
+const BecomeAProviderRouteChildren: BecomeAProviderRouteChildren = {
+  BecomeAProviderApplyRoute: BecomeAProviderApplyRoute,
+}
+
+const BecomeAProviderRouteWithChildren = BecomeAProviderRoute._addFileChildren(
+  BecomeAProviderRouteChildren,
+)
 
 interface DashboardRouteChildren {
   DashboardBookingsRoute: typeof DashboardBookingsRoute
@@ -1274,7 +1305,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AccessDeniedRoute: AccessDeniedRoute,
   AdminRoute: AdminRouteWithChildren,
-  BecomeAProviderRoute: BecomeAProviderRoute,
+  BecomeAProviderRoute: BecomeAProviderRouteWithChildren,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
