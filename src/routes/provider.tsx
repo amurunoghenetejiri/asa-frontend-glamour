@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { DashboardShell } from "../components/site/DashboardShell";
+import { RequireAuth } from "../components/site/RequireAuth";
 import { LayoutDashboard, Image, Calendar, Clock, Wallet, BarChart3, MessageSquare, Settings } from "lucide-react";
 
 const NAV = [
@@ -14,10 +15,13 @@ const NAV = [
 ];
 
 export const Route = createFileRoute("/provider")({
+  ssr: false,
   head: () => ({ meta: [{ title: "Provider Dashboard — Asá" }] }),
   component: () => (
-    <DashboardShell title="Provider Dashboard" nav={NAV} user={{ name: "Chinedu Okafor", role: "Master Electrician", avatar: "https://i.pravatar.cc/100?img=12" }}>
-      <Outlet />
-    </DashboardShell>
+    <RequireAuth roles={["provider", "admin", "super_admin"]}>
+      <DashboardShell title="Provider Dashboard" nav={NAV}>
+        <Outlet />
+      </DashboardShell>
+    </RequireAuth>
   ),
 });

@@ -33,7 +33,7 @@ export const Route = createFileRoute("/become-a-provider")({
                 </li>
               ))}
             </ol>
-            <Link to="/signup" className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
+            <Link to="/become-a-provider/apply" className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
               Apply as Provider
             </Link>
           </div>

@@ -1,6 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Bell, Search } from "lucide-react";
+import { RoleSwitcher } from "./RoleSwitcher";
+import { useAuth } from "@/hooks/use-auth";
 
 export type NavItem = { to: string; label: string; icon: React.ComponentType<{ className?: string }> };
 
@@ -8,23 +10,30 @@ export function DashboardShell({
   title,
   nav,
   children,
-  user,
 }: {
   title: string;
   nav: NavItem[];
   children: ReactNode;
-  user: { name: string; role: string; avatar: string };
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { profile, user, signOut, activeMode } = useAuth();
+
+  const roleLabel: Record<string, string> = {
+    customer: "Customer", provider: "Provider", admin: "Admin", super_admin: "Super Admin", support_agent: "Support Agent",
+  };
+
+  const initials = (profile?.full_name || user?.email || "U").slice(0, 1).toUpperCase();
+  const avatar = profile?.avatar_url;
+
   return (
     <div className="min-h-screen bg-muted/40">
       <div className="lg:grid lg:grid-cols-[260px_1fr]">
         <aside className="hidden border-r border-border bg-card lg:sticky lg:top-0 lg:block lg:h-screen">
           <div className="flex h-full flex-col">
             <Link to="/" className="border-b border-border p-6 font-display text-2xl font-bold gold-gradient">Asá</Link>
-            <nav className="flex-1 space-y-1 p-4">
+            <nav className="flex-1 space-y-1 overflow-y-auto p-4">
               {nav.map((n) => {
-                const active = pathname === n.to || (n.to !== "/dashboard" && n.to !== "/provider" && pathname.startsWith(n.to));
+                const active = pathname === n.to || (n.to !== "/dashboard" && n.to !== "/provider" && n.to !== "/admin" && n.to !== "/super-admin" && n.to !== "/support" && pathname.startsWith(n.to));
                 const Icon = n.icon;
                 return (
                   <Link
@@ -39,13 +48,17 @@ export function DashboardShell({
             </nav>
             <div className="border-t border-border p-4">
               <div className="flex items-center gap-3 rounded-xl bg-muted/60 p-3">
-                <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover" />
+                {avatar ? (
+                  <img src={avatar} alt="" className="h-10 w-10 rounded-full object-cover" />
+                ) : (
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">{initials}</div>
+                )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold">{user.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">{user.role}</p>
+                  <p className="truncate text-sm font-semibold">{profile?.full_name || user?.email}</p>
+                  <p className="truncate text-xs text-muted-foreground">{roleLabel[activeMode]}</p>
                 </div>
               </div>
-              <Link to="/" className="mt-2 block text-center text-xs text-muted-foreground hover:text-primary">Logout</Link>
+              <button onClick={signOut} className="mt-2 block w-full text-center text-xs text-muted-foreground hover:text-primary">Logout</button>
             </div>
           </div>
         </aside>
@@ -61,8 +74,13 @@ export function DashboardShell({
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <input placeholder="Search" className="h-10 w-56 rounded-full border border-border bg-background pl-9 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
                 </div>
+                <RoleSwitcher />
                 <button className="grid h-10 w-10 place-items-center rounded-full border border-border bg-background hover:bg-muted"><Bell className="h-4 w-4" /></button>
-                <img src={user.avatar} className="h-10 w-10 rounded-full object-cover lg:hidden" alt="" />
+                {avatar ? (
+                  <img src={avatar} className="h-10 w-10 rounded-full object-cover lg:hidden" alt="" />
+                ) : (
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground lg:hidden">{initials}</div>
+                )}
               </div>
             </div>
             <nav className="flex gap-1 overflow-x-auto border-t border-border px-2 py-2 lg:hidden">
@@ -90,6 +108,16 @@ export function StatCard({ label, value, delta }: { label: string; value: string
       <p className="text-xs uppercase tracking-widest text-muted-foreground">{label}</p>
       <p className="mt-2 font-display text-2xl font-bold">{value}</p>
       {delta && <p className="mt-1 text-xs text-emerald-600">{delta}</p>}
+    </div>
+  );
+}
+
+export function EmptyState({ title, description, action }: { title: string; description: string; action?: ReactNode }) {
+  return (
+    <div className="rounded-3xl border border-dashed border-border bg-card p-12 text-center">
+      <h3 className="font-display text-lg font-semibold">{title}</h3>
+      <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">{description}</p>
+      {action && <div className="mt-6">{action}</div>}
     </div>
   );
 }
