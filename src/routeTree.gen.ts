@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProviderRouteImport } from './routes/provider'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LoginRouteImport } from './routes/login'
@@ -22,6 +23,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BecomeAProviderRouteImport } from './routes/become-a-provider'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProviderIndexRouteImport } from './routes/provider.index'
@@ -50,6 +52,11 @@ const TermsRoute = TermsRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProviderRoute = ProviderRouteImport.update({
@@ -105,6 +112,11 @@ const CategoriesRoute = CategoriesRouteImport.update({
 const BecomeAProviderRoute = BecomeAProviderRouteImport.update({
   id: '/become-a-provider',
   path: '/become-a-provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessDeniedRoute = AccessDeniedRouteImport.update({
+  id: '/access-denied',
+  path: '/access-denied',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -206,6 +218,7 @@ const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -217,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/provider': typeof ProviderRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
@@ -240,6 +254,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -249,6 +264,7 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
@@ -273,6 +289,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/become-a-provider': typeof BecomeAProviderRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -284,6 +301,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/provider': typeof ProviderRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
@@ -309,6 +327,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/access-denied'
     | '/become-a-provider'
     | '/categories'
     | '/contact'
@@ -320,6 +339,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacy'
     | '/provider'
+    | '/reset-password'
     | '/signup'
     | '/terms'
     | '/dashboard/bookings'
@@ -343,6 +363,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/access-denied'
     | '/become-a-provider'
     | '/categories'
     | '/contact'
@@ -352,6 +373,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/login'
     | '/privacy'
+    | '/reset-password'
     | '/signup'
     | '/terms'
     | '/dashboard/bookings'
@@ -375,6 +397,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/access-denied'
     | '/become-a-provider'
     | '/categories'
     | '/contact'
@@ -386,6 +409,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacy'
     | '/provider'
+    | '/reset-password'
     | '/signup'
     | '/terms'
     | '/dashboard/bookings'
@@ -410,6 +434,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AccessDeniedRoute: typeof AccessDeniedRoute
   BecomeAProviderRoute: typeof BecomeAProviderRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
@@ -421,6 +446,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
   ProviderRoute: typeof ProviderRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
   ProvidersIdRoute: typeof ProvidersIdRoute
@@ -440,6 +466,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/provider': {
@@ -517,6 +550,13 @@ declare module '@tanstack/react-router' {
       path: '/become-a-provider'
       fullPath: '/become-a-provider'
       preLoaderRoute: typeof BecomeAProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/access-denied': {
+      id: '/access-denied'
+      path: '/access-denied'
+      fullPath: '/access-denied'
+      preLoaderRoute: typeof AccessDeniedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -710,6 +750,7 @@ const ProviderRouteWithChildren = ProviderRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AccessDeniedRoute: AccessDeniedRoute,
   BecomeAProviderRoute: BecomeAProviderRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
@@ -721,6 +762,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
   ProviderRoute: ProviderRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
   ProvidersIdRoute: ProvidersIdRoute,
