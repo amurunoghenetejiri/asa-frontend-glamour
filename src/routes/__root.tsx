@@ -12,6 +12,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Splash } from "../components/site/Splash";
+import { AuthProvider } from "@/hooks/use-auth";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -90,9 +92,7 @@ function RootComponent() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("asa_splash_seen")) {
-      setShowSplash(false);
-    }
+    if (sessionStorage.getItem("asa_splash_seen")) setShowSplash(false);
   }, []);
 
   const handleDone = () => {
@@ -102,8 +102,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {showSplash && <Splash onDone={handleDone} />}
-      <Outlet />
+      <AuthProvider>
+        {showSplash && <Splash onDone={handleDone} />}
+        <Outlet />
+        <Toaster position="top-right" richColors />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
