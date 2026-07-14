@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Search, LogOut, LayoutDashboard, User as UserIcon } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { GlobalSearchButton } from "./GlobalSearch";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -45,6 +46,7 @@ export function Navbar() {
           ))}
         </nav>
         <div className="hidden items-center gap-3 lg:flex">
+          <GlobalSearchButton />
           {user ? (
             <div className="relative">
               <button onClick={() => setMenuOpen((s) => !s)} className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-4 text-sm font-medium hover:bg-muted">
@@ -66,9 +68,12 @@ export function Navbar() {
             </>
           )}
         </div>
-        <button className="lg:hidden" onClick={() => setOpen((s) => !s)} aria-label="Menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <GlobalSearchButton variant="icon" />
+          <button onClick={() => setOpen((s) => !s)} aria-label="Menu">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
       {open && (
         <div className="border-t border-border/60 bg-background lg:hidden">
