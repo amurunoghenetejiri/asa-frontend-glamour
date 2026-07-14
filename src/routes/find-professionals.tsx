@@ -3,7 +3,15 @@ import { useState } from "react";
 import { Search, MapPin, SlidersHorizontal } from "lucide-react";
 import { PublicLayout } from "../components/site/PublicLayout";
 import { CATEGORIES, PROVIDERS, STATES } from "../lib/data";
-import { ProviderCard } from "./index";
+import { ProviderCard, type ProviderCardData } from "../components/site/ProviderCard";
+
+function toCard(p: typeof PROVIDERS[number]): ProviderCardData {
+  return {
+    id: p.id, name: p.name, profession: p.profession, location: p.location,
+    avatar_url: p.avatar, cover: p.cover, verified: p.verified, rating: p.rating,
+    reviews: p.reviews, price: p.price, years: p.years,
+  };
+}
 
 export const Route = createFileRoute("/find-professionals")({
   head: () => ({ meta: [{ title: "Find Professionals — Asá" }, { name: "description", content: "Search verified professionals near you." }] }),
@@ -64,7 +72,7 @@ function FindPros() {
         <div>
           <p className="mb-4 text-sm text-muted-foreground">{list.length} professionals found</p>
           <div className="grid gap-5 sm:grid-cols-2">
-            {list.map((p) => <ProviderCard key={p.id} p={p} />)}
+            {list.map((p) => <ProviderCard key={p.id} p={toCard(p)} />)}
           </div>
         </div>
       </div>

@@ -1,35 +1,106 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, MapPin, Shield, Star, ChevronRight, CheckCircle2, ArrowRight } from "lucide-react";
+import { Search, MapPin, Shield, ChevronRight, CheckCircle2, ArrowRight, Sparkles, Users, Star, TrendingUp } from "lucide-react";
 import { PublicLayout } from "../components/site/PublicLayout";
-import { CATEGORIES, HERO_SLIDES, PROVIDERS, STATES, TESTIMONIALS } from "../lib/data";
+import { ProviderCard, type ProviderCardData } from "../components/site/ProviderCard";
+import { STATES, TESTIMONIALS, HERO_SLIDES } from "../lib/data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Asá — Trusted. Verified. Nearby." },
       { name: "description", content: "Nigeria's premium marketplace for verified skilled professionals. Book electricians, tailors, cleaners, mechanics and more." },
+      { property: "og:title", content: "Asá — Trusted. Verified. Nearby." },
+      { property: "og:description", content: "Nigeria's premium marketplace for verified skilled professionals." },
     ],
   }),
   component: Home,
 });
 
+type Category = { id: string; slug: string; name: string; icon: string | null; description: string | null };
+type Stats = { providers: number; users: number; categories: number; states: number };
+
 function Home() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [providers, setProviders] = useState<ProviderCardData[]>([]);
+  const [recent, setRecent] = useState<ProviderCardData[]>([]);
+  const [stats, setStats] = useState<Stats>({ providers: 0, users: 0, categories: 0, states: 0 });
+
+  useEffect(() => {
+    (async () => {
+      const [{ data: cats }, { data: provs }, { data: recentProvs }, users, providerCount] = await Promise.all([
+        supabase.from("categories").select("id, slug, name, icon, description").eq("is_active", true).order("sort_order").limit(12),
+        supabase
+          .from("profiles")
+          .select("id, full_name, avatar_url, profession, city, state, years_experience, hourly_rate")
+          .eq("is_provider", true)
+          .order("created_at", { ascending: false })
+          .limit(6),
+        supabase
+          .from("profiles")
+          .select("id, full_name, avatar_url, profession, city, state, years_experience")
+          .eq("is_provider", true)
+          .order("created_at", { ascending: false })
+          .limit(4),
+        supabase.from("profiles").select("id", { count: "exact", head: true }),
+        supabase.from("profiles").select("id", { count: "exact", head: true }).eq("is_provider", true),
+      ]);
+      setCategories((cats as Category[]) ?? []);
+      setProviders(toCards(provs ?? []));
+      setRecent(toCards(recentProvs ?? []));
+      const stateSet = new Set(((provs ?? []) as { state: string | null }[]).map((p) => p.state).filter(Boolean));
+      setStats({
+        providers: providerCount.count ?? 0,
+        users: users.count ?? 0,
+        categories: cats?.length ?? 0,
+        states: stateSet.size,
+      });
+    })();
+  }, []);
+
   return (
     <PublicLayout>
       <Hero />
       <SearchBar />
-      <PopularCategories />
-      <FeaturedProviders />
-      <TopRated />
+      <TrustStrip />
+      <PopularCategories categories={categories} />
+      <RecentlyJoined providers={recent} />
+      <FeaturedProviders providers={providers} />
       <HowItWorks />
+      <Stats stats={stats} />
       <Testimonials />
-      <Stats />
       <BecomeProviderCTA />
       <Newsletter />
       <MiniFAQ />
     </PublicLayout>
   );
+}
+
+type ProfileRow = {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  profession: string | null;
+  city: string | null;
+  state: string | null;
+  years_experience?: number | null;
+  hourly_rate?: number | null;
+};
+
+function toCards(rows: ProfileRow[]): ProviderCardData[] {
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.full_name || "Verified Provider",
+    profession: r.profession,
+    location: [r.city, r.state].filter(Boolean).join(", ") || null,
+    avatar_url: r.avatar_url,
+    verified: true,
+    rating: null,
+    reviews: null,
+    price: r.hourly_rate ? `₦${Number(r.hourly_rate).toLocaleString()}/hr` : null,
+    years: r.years_experience ?? null,
+  }));
 }
 
 function Hero() {
@@ -41,10 +112,7 @@ function Hero() {
   return (
     <section className="relative h-[85vh] min-h-[560px] w-full overflow-hidden">
       {HERO_SLIDES.map((s, idx) => (
-        <div
-          key={idx}
-          className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
-        >
+        <div key={idx} className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}>
           <img src={s.image} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0F5A43]/95 via-[#0F5A43]/70 to-[#0F5A43]/20" />
         </div>
@@ -53,9 +121,7 @@ function Hero() {
         <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.25em] text-gold backdrop-blur">
           <Shield className="h-3.5 w-3.5" /> Verified · Rated · Insured
         </p>
-        <h1 className="max-w-3xl font-display text-4xl font-bold text-white sm:text-5xl lg:text-7xl">
-          {HERO_SLIDES[i].title}
-        </h1>
+        <h1 className="max-w-3xl font-display text-4xl font-bold text-white sm:text-5xl lg:text-7xl">{HERO_SLIDES[i].title}</h1>
         <p className="mt-5 max-w-xl text-lg text-white/85">{HERO_SLIDES[i].subtitle}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/find-professionals" className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#3a2b06] shadow-lg transition hover:brightness-110">
@@ -101,7 +167,28 @@ function SearchBar() {
   );
 }
 
-function PopularCategories() {
+function TrustStrip() {
+  const items = [
+    { icon: CheckCircle2, text: "ID-verified providers" },
+    { icon: Shield, text: "Secure escrow payments" },
+    { icon: Star, text: "Honest customer reviews" },
+    { icon: Sparkles, text: "36 states covered" },
+  ];
+  return (
+    <section className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
+      <div className="grid gap-4 rounded-3xl border border-border bg-card p-6 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((it, k) => (
+          <div key={k} className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary"><it.icon className="h-5 w-5" /></span>
+            <p className="text-sm font-medium">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PopularCategories({ categories }: { categories: Category[] }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="mb-10 flex items-end justify-between">
@@ -109,22 +196,52 @@ function PopularCategories() {
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Explore</p>
           <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Popular Categories</h2>
         </div>
-        <Link to="/categories" className="hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:inline-flex">View all <ChevronRight className="h-4 w-4" /></Link>
+        <Link to="/categories" className="hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:inline-flex">
+          View all <ChevronRight className="h-4 w-4" />
+        </Link>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {CATEGORIES.map((c) => (
-          <Link key={c.slug} to="/find-professionals" className="card-hover group rounded-2xl border border-border bg-card p-5 text-center">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/8 text-2xl transition-colors group-hover:bg-primary/15">{c.icon}</div>
-            <p className="mt-3 text-sm font-semibold">{c.name}</p>
-            <p className="text-xs text-muted-foreground">{c.count} pros</p>
-          </Link>
-        ))}
+      {categories.length === 0 ? (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="h-28 rounded-2xl shimmer" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {categories.map((c) => (
+            <Link key={c.id} to="/find-professionals" className="card-hover group rounded-2xl border border-border bg-card p-5 text-center">
+              <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/8 text-2xl transition-colors group-hover:bg-primary/15">
+                {c.icon || "✨"}
+              </div>
+              <p className="mt-3 text-sm font-semibold">{c.name}</p>
+              <p className="text-xs text-muted-foreground">Browse pros</p>
+            </Link>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function RecentlyJoined({ providers }: { providers: ProviderCardData[] }) {
+  if (providers.length === 0) return null;
+  return (
+    <section className="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
+      <div className="mb-8 flex items-end justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Fresh talent</p>
+          <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Recently joined</h2>
+        </div>
+        <Link to="/find-professionals" className="hidden text-sm font-medium text-primary hover:underline sm:inline">See more →</Link>
+      </div>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {providers.map((p) => <ProviderCard key={p.id} p={p} compact />)}
       </div>
     </section>
   );
 }
 
-function FeaturedProviders() {
+function FeaturedProviders({ providers }: { providers: ProviderCardData[] }) {
   return (
     <section className="bg-muted/40 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -135,58 +252,24 @@ function FeaturedProviders() {
           </div>
           <Link to="/find-professionals" className="hidden text-sm font-medium text-primary hover:underline sm:inline">See more →</Link>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PROVIDERS.slice(0, 6).map((p) => <ProviderCard key={p.id} p={p} />)}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function TopRated() {
-  const top = [...PROVIDERS].sort((a, b) => b.rating - a.rating).slice(0, 4);
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mb-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Best of Asá</p>
-        <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Top rated this month</h2>
-      </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {top.map((p) => <ProviderCard key={p.id} p={p} compact />)}
-      </div>
-    </section>
-  );
-}
-
-export function ProviderCard({ p, compact = false }: { p: typeof PROVIDERS[number]; compact?: boolean }) {
-  return (
-    <Link to="/providers/$id" params={{ id: p.id }} className="card-hover group block overflow-hidden rounded-3xl border border-border bg-card">
-      <div className="relative h-36 overflow-hidden">
-        <img src={p.cover} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-        {p.verified && (
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold text-primary">
-            <CheckCircle2 className="h-3 w-3" /> Verified
-          </span>
+        {providers.length === 0 ? (
+          <div className="rounded-3xl border border-dashed border-border bg-card p-16 text-center">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary"><Users className="h-6 w-6" /></div>
+            <h3 className="mt-4 font-display text-xl font-semibold">Providers are on the way</h3>
+            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+              Asá just launched. Featured, verified professionals will appear here as they join. Be one of the first.
+            </p>
+            <Link to="/become-a-provider" className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
+              Apply to be featured <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {providers.map((p) => <ProviderCard key={p.id} p={p} />)}
+          </div>
         )}
       </div>
-      <div className="relative px-5 pb-5">
-        <img src={p.avatar} alt={p.name} className="absolute -top-8 h-16 w-16 rounded-2xl border-4 border-card object-cover shadow-md" />
-        <div className="pt-10">
-          <h3 className="font-display text-lg font-bold">{p.name}</h3>
-          <p className="text-sm text-muted-foreground">{p.profession}</p>
-          <div className="mt-3 flex items-center justify-between text-xs">
-            <span className="inline-flex items-center gap-1 text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{p.location}</span>
-            <span className="inline-flex items-center gap-1 font-semibold"><Star className="h-3.5 w-3.5 fill-gold text-gold" />{p.rating}<span className="text-muted-foreground">({p.reviews})</span></span>
-          </div>
-          {!compact && (
-            <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-              <span className="text-xs text-muted-foreground">From</span>
-              <span className="text-sm font-bold text-primary">{p.price}</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </Link>
+    </section>
   );
 }
 
@@ -204,7 +287,7 @@ function HowItWorks() {
         <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">How Asá works</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s) => (
-            <div key={s.n} className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+            <div key={s.n} className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:bg-white/10">
               <div className="font-display text-4xl font-bold gold-gradient">{s.n}</div>
               <h3 className="mt-4 text-lg font-semibold">{s.t}</h3>
               <p className="mt-2 text-sm text-white/70">{s.d}</p>
@@ -216,14 +299,45 @@ function HowItWorks() {
   );
 }
 
+function Stats({ stats }: { stats: Stats }) {
+  const items = [
+    { n: stats.users, l: "Members" },
+    { n: stats.providers, l: "Verified providers" },
+    { n: stats.categories, l: "Service categories" },
+    { n: stats.states, l: "States covered" },
+  ];
+  return (
+    <section className="bg-muted/40 py-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 sm:grid-cols-4 sm:px-6 lg:px-8">
+        {items.map((i) => (
+          <div key={i.l} className="text-center">
+            <div className="font-display text-3xl font-bold text-primary sm:text-5xl">
+              {i.n.toLocaleString()}
+              {i.n > 0 ? "+" : ""}
+            </div>
+            <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground sm:text-sm">{i.l}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Testimonials() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Testimonials</p>
-      <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Loved by thousands</h2>
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
+      <div className="mb-10 flex items-end justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Stories</p>
+          <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">Real people, real results</h2>
+        </div>
+        <span className="hidden items-center gap-2 text-sm text-muted-foreground sm:inline-flex">
+          <TrendingUp className="h-4 w-4 text-primary" /> Trusted from Lagos to Enugu
+        </span>
+      </div>
+      <div className="grid gap-6 md:grid-cols-3">
         {TESTIMONIALS.map((t) => (
-          <div key={t.name} className="rounded-3xl border border-border bg-card p-7">
+          <div key={t.name} className="card-hover rounded-3xl border border-border bg-card p-7">
             <div className="flex gap-0.5 text-gold">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-gold" />)}</div>
             <p className="mt-4 text-sm leading-relaxed text-foreground/85">"{t.text}"</p>
             <div className="mt-6 flex items-center gap-3">
@@ -240,39 +354,24 @@ function Testimonials() {
   );
 }
 
-function Stats() {
-  const items = [
-    { n: "12,400+", l: "Verified providers" },
-    { n: "48,900+", l: "Jobs completed" },
-    { n: "36", l: "States covered" },
-    { n: "4.9/5", l: "Avg. rating" },
-  ];
-  return (
-    <section className="bg-muted/40 py-16">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 sm:grid-cols-4 sm:px-6 lg:px-8">
-        {items.map((i) => (
-          <div key={i.l} className="text-center">
-            <div className="font-display text-3xl font-bold text-primary sm:text-5xl">{i.n}</div>
-            <p className="mt-2 text-xs uppercase tracking-widest text-muted-foreground sm:text-sm">{i.l}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function BecomeProviderCTA() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="relative overflow-hidden rounded-[2rem] p-10 text-white sm:p-16" style={{ background: "linear-gradient(135deg, #0F5A43 0%, #0A3E2E 100%)" }}>
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gold/20 blur-3xl" />
+        <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-primary-glow/30 blur-3xl" />
         <div className="relative max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Earn on Asá</p>
           <h2 className="mt-3 font-display text-3xl font-bold sm:text-5xl">Turn your skill into a business.</h2>
-          <p className="mt-4 text-white/80">Join thousands of verified Nigerian professionals earning consistently on Asá. Free to sign up, low commission, get paid securely.</p>
-          <Link to="/become-a-provider" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#3a2b06] hover:brightness-110">
-            Start earning <ArrowRight className="h-4 w-4" />
-          </Link>
+          <p className="mt-4 text-white/80">Join verified Nigerian professionals earning consistently on Asá. Free to sign up, low commission, get paid securely.</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/become-a-provider" className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#3a2b06] hover:brightness-110">
+              Start earning <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/how-it-works" className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur hover:bg-white/20">
+              How it works
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -318,3 +417,6 @@ function MiniFAQ() {
     </section>
   );
 }
+
+// Backwards-compat: some routes still import ProviderCard from "./index"
+export { ProviderCard };
