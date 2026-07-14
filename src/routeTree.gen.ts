@@ -66,6 +66,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
 import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
 
 const TermsRoute = TermsRouteImport.update({
@@ -353,6 +354,11 @@ const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
   id: '/announcements',
   path: '/announcements',
@@ -381,6 +387,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRouteWithChildren
   '/terms': typeof TermsRoute
   '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -436,6 +443,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -497,6 +505,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRouteWithChildren
   '/terms': typeof TermsRoute
   '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/applications': typeof AdminApplicationsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
@@ -559,6 +568,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/admin/announcements'
+    | '/admin/applications'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/reports'
@@ -614,6 +624,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/terms'
     | '/admin/announcements'
+    | '/admin/applications'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/reports'
@@ -674,6 +685,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/admin/announcements'
+    | '/admin/applications'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/reports'
@@ -1138,6 +1150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCategoriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/applications': {
+      id: '/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminApplicationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/announcements': {
       id: '/admin/announcements'
       path: '/announcements'
@@ -1150,6 +1169,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminAnnouncementsRoute: typeof AdminAnnouncementsRoute
+  AdminApplicationsRoute: typeof AdminApplicationsRoute
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminContentRoute: typeof AdminContentRoute
   AdminReportsRoute: typeof AdminReportsRoute
@@ -1159,6 +1179,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnnouncementsRoute: AdminAnnouncementsRoute,
+  AdminApplicationsRoute: AdminApplicationsRoute,
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminContentRoute: AdminContentRoute,
   AdminReportsRoute: AdminReportsRoute,
