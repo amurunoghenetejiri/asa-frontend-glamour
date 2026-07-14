@@ -14,48 +14,150 @@ export type Database = {
   }
   public: {
     Tables: {
-      profiles: {
+      categories: {
         Row: {
-          address: string | null
-          avatar_url: string | null
-          city: string | null
           created_at: string
-          email: string | null
-          full_name: string | null
+          description: string | null
+          icon: string | null
           id: string
-          last_login: string | null
-          phone: string | null
-          state: string | null
-          status: Database["public"]["Enums"]["account_status"]
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
           updated_at: string
         }
         Insert: {
-          address?: string | null
-          avatar_url?: string | null
-          city?: string | null
           created_at?: string
-          email?: string | null
-          full_name?: string | null
-          id: string
-          last_login?: string | null
-          phone?: string | null
-          state?: string | null
-          status?: Database["public"]["Enums"]["account_status"]
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
           updated_at?: string
         }
         Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          metadata: Json | null
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json | null
+          read?: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json | null
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          availability: Json | null
+          avatar_url: string | null
+          bio: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          hourly_rate: number | null
+          id: string
+          is_provider: boolean
+          last_login: string | null
+          lga: string | null
+          phone: string | null
+          profession: string | null
+          skills: string[] | null
+          social_links: Json | null
+          state: string | null
+          status: Database["public"]["Enums"]["account_status"]
+          updated_at: string
+          years_experience: number | null
+        }
+        Insert: {
           address?: string | null
+          availability?: Json | null
           avatar_url?: string | null
+          bio?: string | null
           city?: string | null
+          country?: string | null
           created_at?: string
           email?: string | null
           full_name?: string | null
-          id?: string
+          hourly_rate?: number | null
+          id: string
+          is_provider?: boolean
           last_login?: string | null
+          lga?: string | null
           phone?: string | null
+          profession?: string | null
+          skills?: string[] | null
+          social_links?: Json | null
           state?: string | null
           status?: Database["public"]["Enums"]["account_status"]
           updated_at?: string
+          years_experience?: number | null
+        }
+        Update: {
+          address?: string | null
+          availability?: Json | null
+          avatar_url?: string | null
+          bio?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          hourly_rate?: number | null
+          id?: string
+          is_provider?: boolean
+          last_login?: string | null
+          lga?: string | null
+          phone?: string | null
+          profession?: string | null
+          skills?: string[] | null
+          social_links?: Json | null
+          state?: string | null
+          status?: Database["public"]["Enums"]["account_status"]
+          updated_at?: string
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -145,6 +247,42 @@ export type Database = {
           created_at?: string
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          email_notifications: boolean
+          marketing_emails: boolean
+          profile_visibility: string
+          push_notifications: boolean
+          theme: string
+          two_factor_enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_notifications?: boolean
+          marketing_emails?: boolean
+          profile_visibility?: string
+          push_notifications?: boolean
+          theme?: string
+          two_factor_enabled?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_notifications?: boolean
+          marketing_emails?: boolean
+          profile_visibility?: string
+          push_notifications?: boolean
+          theme?: string
+          two_factor_enabled?: boolean
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
