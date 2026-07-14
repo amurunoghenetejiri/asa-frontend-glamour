@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Route as AppsRoute } from "./admin.applications";
+import { ApplicationsManagement } from "@/components/admin/ApplicationsManagement";
 
 export const Route = createFileRoute("/super-admin/applications")({
-  component: AppsRoute.options.component!,
+  component: ApplicationsManagement,
 });
