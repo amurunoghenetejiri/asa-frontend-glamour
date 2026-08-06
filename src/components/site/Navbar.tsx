@@ -6,13 +6,15 @@ import { GlobalSearchButton } from "./GlobalSearch";
 
 const NAV = [
   { to: "/", label: "Home" },
+  { to: "/feed", label: "Feed" },
+  { to: "/directory", label: "Directory" },
   { to: "/categories", label: "Categories" },
   { to: "/find-professionals", label: "Find Professionals" },
   { to: "/become-a-provider", label: "Become a Provider" },
   { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
   { to: "/faq", label: "FAQ" },
 ] as const;
+
 
 const DASH_ROUTE: Record<string, string> = {
   super_admin: "/super-admin", admin: "/admin", support_agent: "/support", provider: "/provider", customer: "/dashboard",

@@ -10,11 +10,28 @@ export type Profile = {
   email: string | null;
   phone: string | null;
   avatar_url: string | null;
+  cover_url: string | null;
   address: string | null;
   city: string | null;
   state: string | null;
+  lga: string | null;
+  country: string | null;
+  bio: string | null;
+  username: string | null;
+  professional_title: string | null;
+  profession: string | null;
+  date_of_birth: string | null;
+  gender: string | null;
+  languages: string[] | null;
+  skills: string[] | null;
+  hourly_rate: number | null;
+  years_experience: number | null;
+  account_type: "customer" | "provider";
+  verification_status: "unverified" | "pending" | "verified" | "rejected";
+  is_provider: boolean;
   status: "active" | "suspended";
 };
+
 
 type Ctx = {
   user: User | null;
