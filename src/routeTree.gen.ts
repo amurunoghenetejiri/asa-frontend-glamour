@@ -20,6 +20,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FindProfessionalsRouteImport } from './routes/find-professionals'
+import { Route as FeedRouteImport } from './routes/feed'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -122,6 +123,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const FindProfessionalsRoute = FindProfessionalsRouteImport.update({
   id: '/find-professionals',
   path: '/find-professionals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedRoute = FeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -375,6 +381,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -434,6 +441,7 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -493,6 +501,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -556,6 +565,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/faq'
+    | '/feed'
     | '/find-professionals'
     | '/forgot-password'
     | '/how-it-works'
@@ -615,6 +625,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/contact'
     | '/faq'
+    | '/feed'
     | '/find-professionals'
     | '/forgot-password'
     | '/how-it-works'
@@ -673,6 +684,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/faq'
+    | '/feed'
     | '/find-professionals'
     | '/forgot-password'
     | '/how-it-works'
@@ -735,6 +747,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   FaqRoute: typeof FaqRoute
+  FeedRoute: typeof FeedRoute
   FindProfessionalsRoute: typeof FindProfessionalsRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -826,6 +839,13 @@ declare module '@tanstack/react-router' {
       path: '/find-professionals'
       fullPath: '/find-professionals'
       preLoaderRoute: typeof FindProfessionalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feed': {
+      id: '/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof FeedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -1310,6 +1330,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
   FaqRoute: FaqRoute,
+  FeedRoute: FeedRoute,
   FindProfessionalsRoute: FindProfessionalsRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HowItWorksRoute: HowItWorksRoute,
@@ -1326,13 +1347,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
