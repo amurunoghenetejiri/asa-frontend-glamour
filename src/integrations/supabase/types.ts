@@ -50,6 +50,24 @@ export type Database = {
         }
         Relationships: []
       }
+      follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -86,80 +104,326 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          media_type: Database["public"]["Enums"]["post_media_type"]
+          media_url: string
+          sort_order: number
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type?: Database["public"]["Enums"]["post_media_type"]
+          media_url: string
+          sort_order?: number
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          media_type?: Database["public"]["Enums"]["post_media_type"]
+          media_url?: string
+          sort_order?: number
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      post_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          post_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_likes: {
+        Row: {
+          created_at: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_media: {
+        Row: {
+          created_at: string
+          id: string
+          media_type: Database["public"]["Enums"]["post_media_type"]
+          post_id: string
+          sort_order: number
+          url: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          media_type?: Database["public"]["Enums"]["post_media_type"]
+          post_id: string
+          sort_order?: number
+          url: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          media_type?: Database["public"]["Enums"]["post_media_type"]
+          post_id?: string
+          sort_order?: number
+          url?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_media_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_shares: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_shares_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: string
+          shared_post_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          shared_post_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          shared_post_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_shared_post_id_fkey"
+            columns: ["shared_post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
+          account_type: Database["public"]["Enums"]["account_type"]
           address: string | null
           availability: Json | null
           avatar_url: string | null
           bio: string | null
+          business_name: string | null
+          category_id: string | null
           city: string | null
           country: string | null
+          cover_url: string | null
           created_at: string
+          date_of_birth: string | null
           email: string | null
           full_name: string | null
+          gender: string | null
           hourly_rate: number | null
           id: string
           is_provider: boolean
+          languages: string[] | null
           last_login: string | null
           lga: string | null
           phone: string | null
           profession: string | null
+          professional_title: string | null
+          service_location: string | null
           skills: string[] | null
           social_links: Json | null
+          starting_price: number | null
           state: string | null
           status: Database["public"]["Enums"]["account_status"]
+          subcategory: string | null
           updated_at: string
+          username: string | null
+          verification_status: Database["public"]["Enums"]["verification_status"]
           years_experience: number | null
         }
         Insert: {
+          account_type?: Database["public"]["Enums"]["account_type"]
           address?: string | null
           availability?: Json | null
           avatar_url?: string | null
           bio?: string | null
+          business_name?: string | null
+          category_id?: string | null
           city?: string | null
           country?: string | null
+          cover_url?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
           full_name?: string | null
+          gender?: string | null
           hourly_rate?: number | null
           id: string
           is_provider?: boolean
+          languages?: string[] | null
           last_login?: string | null
           lga?: string | null
           phone?: string | null
           profession?: string | null
+          professional_title?: string | null
+          service_location?: string | null
           skills?: string[] | null
           social_links?: Json | null
+          starting_price?: number | null
           state?: string | null
           status?: Database["public"]["Enums"]["account_status"]
+          subcategory?: string | null
           updated_at?: string
+          username?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
           years_experience?: number | null
         }
         Update: {
+          account_type?: Database["public"]["Enums"]["account_type"]
           address?: string | null
           availability?: Json | null
           avatar_url?: string | null
           bio?: string | null
+          business_name?: string | null
+          category_id?: string | null
           city?: string | null
           country?: string | null
+          cover_url?: string | null
           created_at?: string
+          date_of_birth?: string | null
           email?: string | null
           full_name?: string | null
+          gender?: string | null
           hourly_rate?: number | null
           id?: string
           is_provider?: boolean
+          languages?: string[] | null
           last_login?: string | null
           lga?: string | null
           phone?: string | null
           profession?: string | null
+          professional_title?: string | null
+          service_location?: string | null
           skills?: string[] | null
           social_links?: Json | null
+          starting_price?: number | null
           state?: string | null
           status?: Database["public"]["Enums"]["account_status"]
+          subcategory?: string | null
           updated_at?: string
+          username?: string | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
           years_experience?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       provider_applications: {
         Row: {
@@ -229,6 +493,104 @@ export type Database = {
           years_experience?: number | null
         }
         Relationships: []
+      }
+      provider_documents: {
+        Row: {
+          created_at: string
+          doc_type: Database["public"]["Enums"]["provider_doc_type"]
+          file_name: string | null
+          file_path: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          doc_type: Database["public"]["Enums"]["provider_doc_type"]
+          file_name?: string | null
+          file_path: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          doc_type?: Database["public"]["Enums"]["provider_doc_type"]
+          file_name?: string | null
+          file_path?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          author_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          provider_id: string
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          provider_id: string
+          rating: number
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          provider_id?: string
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subcategories: {
+        Row: {
+          category_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subcategories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -302,6 +664,7 @@ export type Database = {
     }
     Enums: {
       account_status: "active" | "suspended"
+      account_type: "customer" | "provider"
       app_role:
         | "customer"
         | "provider"
@@ -309,6 +672,9 @@ export type Database = {
         | "super_admin"
         | "support_agent"
       application_status: "pending" | "approved" | "rejected"
+      post_media_type: "image" | "video"
+      provider_doc_type: "government_id" | "selfie" | "certificate" | "resume"
+      verification_status: "unverified" | "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -437,6 +803,7 @@ export const Constants = {
   public: {
     Enums: {
       account_status: ["active", "suspended"],
+      account_type: ["customer", "provider"],
       app_role: [
         "customer",
         "provider",
@@ -445,6 +812,9 @@ export const Constants = {
         "support_agent",
       ],
       application_status: ["pending", "approved", "rejected"],
+      post_media_type: ["image", "video"],
+      provider_doc_type: ["government_id", "selfie", "certificate", "resume"],
+      verification_status: ["unverified", "pending", "verified", "rejected"],
     },
   },
 } as const
