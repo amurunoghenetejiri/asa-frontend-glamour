@@ -22,6 +22,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FindProfessionalsRouteImport } from './routes/find-professionals'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
@@ -35,6 +36,7 @@ import { Route as SuperAdminIndexRouteImport } from './routes/super-admin.index'
 import { Route as ProviderIndexRouteImport } from './routes/provider.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as UUsernameRouteImport } from './routes/u.$username'
 import { Route as SupportUsersRouteImport } from './routes/support.users'
 import { Route as SupportTicketsRouteImport } from './routes/support.tickets'
 import { Route as SupportReportsRouteImport } from './routes/support.reports'
@@ -135,6 +137,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DirectoryRoute = DirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -199,6 +206,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const UUsernameRoute = UUsernameRouteImport.update({
+  id: '/u/$username',
+  path: '/u/$username',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const SupportUsersRoute = SupportUsersRouteImport.update({
   id: '/users',
@@ -380,6 +392,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/directory': typeof DirectoryRoute
   '/faq': typeof FaqRoute
   '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
@@ -427,6 +440,7 @@ export interface FileRoutesByFullPath {
   '/support/reports': typeof SupportReportsRoute
   '/support/tickets': typeof SupportTicketsRoute
   '/support/users': typeof SupportUsersRoute
+  '/u/$username': typeof UUsernameRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/provider/': typeof ProviderIndexRoute
@@ -440,6 +454,7 @@ export interface FileRoutesByTo {
   '/become-a-provider': typeof BecomeAProviderRouteWithChildren
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/directory': typeof DirectoryRoute
   '/faq': typeof FaqRoute
   '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
@@ -484,6 +499,7 @@ export interface FileRoutesByTo {
   '/support/reports': typeof SupportReportsRoute
   '/support/tickets': typeof SupportTicketsRoute
   '/support/users': typeof SupportUsersRoute
+  '/u/$username': typeof UUsernameRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/provider': typeof ProviderIndexRoute
@@ -500,6 +516,7 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/directory': typeof DirectoryRoute
   '/faq': typeof FaqRoute
   '/feed': typeof FeedRoute
   '/find-professionals': typeof FindProfessionalsRoute
@@ -547,6 +564,7 @@ export interface FileRoutesById {
   '/support/reports': typeof SupportReportsRoute
   '/support/tickets': typeof SupportTicketsRoute
   '/support/users': typeof SupportUsersRoute
+  '/u/$username': typeof UUsernameRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/provider/': typeof ProviderIndexRoute
@@ -564,6 +582,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/contact'
     | '/dashboard'
+    | '/directory'
     | '/faq'
     | '/feed'
     | '/find-professionals'
@@ -611,6 +630,7 @@ export interface FileRouteTypes {
     | '/support/reports'
     | '/support/tickets'
     | '/support/users'
+    | '/u/$username'
     | '/admin/'
     | '/dashboard/'
     | '/provider/'
@@ -624,6 +644,7 @@ export interface FileRouteTypes {
     | '/become-a-provider'
     | '/categories'
     | '/contact'
+    | '/directory'
     | '/faq'
     | '/feed'
     | '/find-professionals'
@@ -668,6 +689,7 @@ export interface FileRouteTypes {
     | '/support/reports'
     | '/support/tickets'
     | '/support/users'
+    | '/u/$username'
     | '/admin'
     | '/dashboard'
     | '/provider'
@@ -683,6 +705,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/contact'
     | '/dashboard'
+    | '/directory'
     | '/faq'
     | '/feed'
     | '/find-professionals'
@@ -730,6 +753,7 @@ export interface FileRouteTypes {
     | '/support/reports'
     | '/support/tickets'
     | '/support/users'
+    | '/u/$username'
     | '/admin/'
     | '/dashboard/'
     | '/provider/'
@@ -746,6 +770,7 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  DirectoryRoute: typeof DirectoryRoute
   FaqRoute: typeof FaqRoute
   FeedRoute: typeof FeedRoute
   FindProfessionalsRoute: typeof FindProfessionalsRoute
@@ -760,6 +785,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRouteWithChildren
   TermsRoute: typeof TermsRoute
   ProvidersIdRoute: typeof ProvidersIdRoute
+  UUsernameRoute: typeof UUsernameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -855,6 +881,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/directory': {
+      id: '/directory'
+      path: '/directory'
+      fullPath: '/directory'
+      preLoaderRoute: typeof DirectoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -945,6 +978,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/u/$username': {
+      id: '/u/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof UUsernameRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/support/users': {
       id: '/support/users'
@@ -1329,6 +1369,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  DirectoryRoute: DirectoryRoute,
   FaqRoute: FaqRoute,
   FeedRoute: FeedRoute,
   FindProfessionalsRoute: FindProfessionalsRoute,
@@ -1343,6 +1384,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRouteWithChildren,
   TermsRoute: TermsRoute,
   ProvidersIdRoute: ProvidersIdRoute,
+  UUsernameRoute: UUsernameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
