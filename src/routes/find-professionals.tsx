@@ -78,6 +78,7 @@ function FindPros() {
           "id, full_name, avatar_url, cover_url, profession, professional_title, city, state, years_experience, hourly_rate, verification_status",
         )
         .eq("is_provider", true)
+        .eq("verification_status", "verified")
         .order("created_at", { ascending: false })
         .limit(100);
 
