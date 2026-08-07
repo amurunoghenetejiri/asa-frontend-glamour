@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Star, CheckCircle2, Sparkles } from "lucide-react";
+import { MapPin, Star, BadgeCheck, Sparkles } from "lucide-react";
 
 export type ProviderCardData = {
   id: string;
@@ -15,68 +15,73 @@ export type ProviderCardData = {
   years?: number | null;
 };
 
-const COVER_FALLBACK =
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&auto=format&fit=crop&q=60";
-
 export function ProviderCard({ p, compact = false }: { p: ProviderCardData; compact?: boolean }) {
   const initials = (p.name || "?").slice(0, 1).toUpperCase();
   return (
-    <Link
-      to="/providers/$id"
-      params={{ id: p.id }}
-      className="card-hover group block overflow-hidden rounded-3xl border border-border bg-card"
-    >
-      <div className="relative h-36 overflow-hidden bg-muted">
-        <img
-          src={p.cover || COVER_FALLBACK}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        {p.verified && (
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold text-primary shadow">
-            <CheckCircle2 className="h-3 w-3" /> Verified
-          </span>
-        )}
-      </div>
-      <div className="relative px-5 pb-5">
-        {p.avatar_url ? (
-          <img src={p.avatar_url} alt={p.name} className="absolute -top-8 h-16 w-16 rounded-2xl border-4 border-card object-cover shadow-md" />
-        ) : (
-          <div className="absolute -top-8 grid h-16 w-16 place-items-center rounded-2xl border-4 border-card bg-primary text-lg font-bold text-primary-foreground shadow-md">
-            {initials}
-          </div>
-        )}
-        <div className="pt-10">
-          <h3 className="font-display text-lg font-bold">{p.name}</h3>
-          <p className="text-sm text-muted-foreground">{p.profession || "Professional"}</p>
-          <div className="mt-3 flex items-center justify-between text-xs">
-            <span className="inline-flex min-w-0 items-center gap-1 truncate text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5 shrink-0" />
-              {p.location || "Nigeria"}
-            </span>
-            {typeof p.rating === "number" && p.rating > 0 ? (
-              <span className="inline-flex items-center gap-1 font-semibold">
-                <Star className="h-3.5 w-3.5 fill-gold text-gold" />
-                {p.rating.toFixed(1)}
-                {p.reviews ? <span className="text-muted-foreground">({p.reviews})</span> : null}
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 text-muted-foreground">
-                <Sparkles className="h-3 w-3" /> New
-              </span>
-            )}
-          </div>
-          {!compact && (
-            <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-              <span className="text-xs text-muted-foreground">
-                {p.years ? `${p.years} yr${p.years === 1 ? "" : "s"} exp.` : "Available"}
-              </span>
-              <span className="text-sm font-bold text-primary">{p.price || "Contact"}</span>
+    <article className="surface-card card-hover group animate-fade-in-soft flex flex-col overflow-hidden">
+      <Link to="/providers/$id" params={{ id: p.id }} className="block">
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          {p.cover || p.avatar_url ? (
+            <img
+              src={(p.cover || p.avatar_url) as string}
+              alt={p.name}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <div className="grid h-full w-full place-items-center bg-primary-soft">
+              <span className="font-display text-4xl font-bold text-primary">{initials}</span>
             </div>
           )}
+          {p.verified && (
+            <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold text-primary-foreground shadow-soft">
+              <BadgeCheck className="h-3 w-3" /> Verified
+            </span>
+          )}
         </div>
+      </Link>
+
+      <div className="flex flex-1 flex-col p-4">
+        <Link to="/providers/$id" params={{ id: p.id }} className="min-w-0">
+          <h3 className="truncate font-display text-base font-bold transition-colors group-hover:text-primary">{p.name}</h3>
+          <p className="truncate text-sm text-muted-foreground">{p.profession || "Professional"}</p>
+        </Link>
+
+        <div className="mt-3 flex items-center justify-between gap-2 text-xs">
+          <span className="inline-flex min-w-0 items-center gap-1 truncate text-muted-foreground">
+            <MapPin className="h-3.5 w-3.5 shrink-0" />
+            {p.location || "Nigeria"}
+          </span>
+          {typeof p.rating === "number" && p.rating > 0 ? (
+            <span className="inline-flex shrink-0 items-center gap-1 font-semibold">
+              <Star className="h-3.5 w-3.5 fill-gold text-gold" />
+              {p.rating.toFixed(1)}
+              {p.reviews ? <span className="text-muted-foreground">({p.reviews})</span> : null}
+            </span>
+          ) : (
+            <span className="inline-flex shrink-0 items-center gap-1 text-muted-foreground">
+              <Sparkles className="h-3 w-3" /> New
+            </span>
+          )}
+        </div>
+
+        {!compact && (
+          <div className="mt-3 flex items-center justify-between gap-2 border-t border-border pt-3">
+            <span className="truncate text-xs text-muted-foreground">
+              {p.years ? `${p.years} yr${p.years === 1 ? "" : "s"} experience` : "Available now"}
+            </span>
+            {p.price && <span className="shrink-0 text-sm font-bold">{p.price}</span>}
+          </div>
+        )}
+
+        <Link
+          to="/providers/$id"
+          params={{ id: p.id }}
+          className="btn-primary mt-4 w-full px-4 py-2.5 text-sm"
+        >
+          Hire Now
+        </Link>
       </div>
-    </Link>
+    </article>
   );
 }
