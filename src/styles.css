@@ -244,3 +244,22 @@
   background-size: 200% 100%;
   animation: shimmer 1.6s linear infinite;
 }
+
+@keyframes fade-in-soft { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scale-in-soft { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes slide-in-left { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+@utility animate-fade-in-soft { animation: fade-in-soft 0.4s ease-out both; }
+@utility animate-scale-in-soft { animation: scale-in-soft 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-slide-in-left { animation: slide-in-left 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-float-soft { animation: float-soft 6s ease-in-out infinite; }
+@utility page-enter { animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
