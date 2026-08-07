@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.activate_provider_on_approval() FROM PUBLIC, anon, authenticated;
