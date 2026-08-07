@@ -152,30 +152,27 @@ function Hero({ stats, avatars }: { stats: Stats; avatars: ProviderCardData[] })
 
           <div className="mt-7 rounded-2xl border border-border bg-card p-2 shadow-soft">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <div className="relative min-w-0 flex-1">
-                <span className="hidden" />
-              </div>
-
-              <div className="relative">
+              <div className="relative min-w-0 flex-[1.4]">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                   placeholder="What service do you need?"
                   aria-label="Search services"
-                  className="field pl-11 pr-4"
+                  className="field w-full pl-11 pr-4"
                 />
               </div>
-              <div className="relative">
+              <div className="relative min-w-0 flex-1">
                 <MapPin className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <select value={state} onChange={(e) => setState(e.target.value)} aria-label="Location" className="field appearance-none pl-11 pr-4">
+                <select value={state} onChange={(e) => setState(e.target.value)} aria-label="Location" className="field w-full appearance-none pl-11 pr-4">
                   <option value="">All Locations</option>
                   {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
-              <Link to={href as never} className="btn-primary h-12 px-7 text-sm">
+              <Link to={href as never} className="btn-primary h-12 shrink-0 px-7 text-sm">
                 <Search className="h-4 w-4" /> Search
               </Link>
+
             </div>
           </div>
 
