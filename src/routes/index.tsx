@@ -160,23 +160,57 @@ function Hero() {
 }
 
 function SearchBar() {
+  const [q, setQ] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+
+  const href =
+    "/find-professionals" +
+    "?" +
+    new URLSearchParams({
+      ...(q.trim() ? { q: q.trim() } : {}),
+      ...(state ? { state } : {}),
+      ...(city.trim() ? { city: city.trim() } : {}),
+    }).toString();
+
   return (
-    <section className="relative z-20 -mt-16 px-4 sm:px-6 lg:px-8">
+    <section className="relative z-10 -mt-16 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl rounded-[2rem] border border-border/60 bg-card p-3 shadow-[0_40px_80px_-30px_rgba(15,90,67,0.45)] sm:p-4">
         <div className="grid gap-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input placeholder="What service do you need?" className="h-14 w-full rounded-2xl bg-muted/50 pl-11 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="What service do you need?"
+              className="h-14 w-full rounded-2xl bg-muted/50 pl-11 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            />
           </div>
           <div className="relative">
             <MapPin className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <select className="h-14 w-full appearance-none rounded-2xl bg-muted/50 pl-11 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30">
+            <select
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              className="h-14 w-full appearance-none rounded-2xl bg-muted/50 pl-11 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            >
               <option value="">State</option>
-              {STATES.map((s) => <option key={s}>{s}</option>)}
+              {STATES.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
             </select>
           </div>
-          <input placeholder="City / Area" className="h-14 w-full rounded-2xl bg-muted/50 px-4 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
-          <Link to="/find-professionals" className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-primary px-8 text-sm font-semibold text-primary-foreground hover:opacity-90">
+          <input
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="City / Area"
+            className="h-14 w-full rounded-2xl bg-muted/50 px-4 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+          />
+          <Link
+            to={href as any}
+            className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-primary px-8 text-sm font-semibold text-primary-foreground hover:opacity-90"
+          >
             <Search className="h-4 w-4" /> Search
           </Link>
         </div>
