@@ -196,37 +196,40 @@ function Hero({ stats, avatars }: { stats: Stats; avatars: ProviderCardData[] })
           )}
         </div>
 
-        <div className="relative hidden justify-center lg:flex">
-          <div className="absolute inset-x-10 bottom-6 top-6 rounded-[3rem] bg-primary-soft" />
-          <img
-            src={heroProfessional}
-            alt="Professional using the Asá marketplace on a phone"
-            width={1024}
-            height={1024}
-            className="relative z-10 h-[480px] w-auto object-contain drop-shadow-2xl"
-          />
-          <div className="animate-float-soft absolute left-0 top-12 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><BadgeCheck className="h-4.5 w-4.5" /></span>
-            <div>
-              <p className="text-xs font-semibold">Verified Providers</p>
-              <p className="text-[11px] text-muted-foreground">{nf(stats.providers)} on Asá</p>
+        <div className="hidden justify-center lg:flex">
+          <div className="relative h-[520px] w-[520px] max-w-full">
+            <div className="absolute inset-x-16 bottom-4 top-4 rounded-[3rem] bg-primary-soft" />
+            <img
+              src={heroProfessional}
+              alt="Professional using the Asá marketplace on a phone"
+              width={1024}
+              height={1024}
+              className="relative z-10 mx-auto h-[520px] w-auto object-contain drop-shadow-2xl"
+            />
+            <div className="animate-float-soft absolute left-0 top-10 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><BadgeCheck className="h-5 w-5" /></span>
+              <div>
+                <p className="text-xs font-semibold">Verified Providers</p>
+                <p className="text-[11px] text-muted-foreground">{nf(stats.providers)} on Asá</p>
+              </div>
             </div>
-          </div>
-          <div className="animate-float-soft absolute bottom-24 left-4 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl" style={{ animationDelay: "1.5s" }}>
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><LayoutGrid className="h-4.5 w-4.5" /></span>
-            <div>
-              <p className="text-xs font-semibold">Service Categories</p>
-              <p className="text-[11px] text-muted-foreground">{nf(stats.categories)} to explore</p>
+            <div className="animate-float-soft absolute bottom-16 left-0 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl" style={{ animationDelay: "1.5s" }}>
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><LayoutGrid className="h-5 w-5" /></span>
+              <div>
+                <p className="text-xs font-semibold">Service Categories</p>
+                <p className="text-[11px] text-muted-foreground">{nf(stats.categories)} to explore</p>
+              </div>
             </div>
-          </div>
-          <div className="animate-float-soft absolute right-0 top-40 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl" style={{ animationDelay: "3s" }}>
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><Users className="h-4.5 w-4.5" /></span>
-            <div>
-              <p className="text-xs font-semibold">Community</p>
-              <p className="text-[11px] text-muted-foreground">{nf(stats.users)} members</p>
+            <div className="animate-float-soft absolute right-0 top-1/2 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card/90 p-3 shadow-lift backdrop-blur-xl" style={{ animationDelay: "3s" }}>
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary"><Users className="h-5 w-5" /></span>
+              <div>
+                <p className="text-xs font-semibold">Community</p>
+                <p className="text-[11px] text-muted-foreground">{nf(stats.users)} members</p>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
