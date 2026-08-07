@@ -27,8 +27,9 @@ export const Route = createFileRoute("/")({
 
 type Category = { id: string; slug: string; name: string; icon: string | null; description: string | null };
 type Stats = { providers: number; users: number; categories: number; states: number };
-type PostRow = { id: string; content: string | null; created_at: string; profiles: { full_name: string | null; username: string | null; avatar_url: string | null; profession: string | null } | null };
-type ReviewRow = { id: string; rating: number; comment: string | null; created_at: string; profiles: { full_name: string | null; avatar_url: string | null } | null };
+type Author = { id: string; full_name: string | null; username: string | null; avatar_url: string | null; profession: string | null };
+type PostRow = { id: string; content: string | null; created_at: string; author: Author | null };
+type ReviewRow = { id: string; rating: number; comment: string | null; created_at: string; author: Author | null };
 
 function Home() {
   const [loading, setLoading] = useState(true);
