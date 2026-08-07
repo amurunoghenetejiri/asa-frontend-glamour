@@ -39,7 +39,10 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-sky: var(--sky);
+  --color-surface: var(--surface);
+  --color-primary-soft: var(--primary-soft);
 }
+
 
 :root {
   --radius: 1rem;
