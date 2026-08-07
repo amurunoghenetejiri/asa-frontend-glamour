@@ -338,16 +338,16 @@ function RecentPosts({ posts, loading }: { posts: PostRow[]; loading: boolean })
           {posts.map((p) => (
             <Link key={p.id} to="/feed" className="surface-card card-hover animate-fade-in-soft flex flex-col p-5">
               <div className="flex min-w-0 items-center gap-3">
-                {p.profiles?.avatar_url ? (
-                  <img src={p.profiles.avatar_url} alt="" loading="lazy" className="h-10 w-10 shrink-0 rounded-full object-cover" />
+                {p.author?.avatar_url ? (
+                  <img src={p.author.avatar_url} alt="" loading="lazy" className="h-10 w-10 shrink-0 rounded-full object-cover" />
                 ) : (
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-soft text-sm font-bold text-primary">
-                    {(p.profiles?.full_name || "A").slice(0, 1).toUpperCase()}
+                    {(p.author?.full_name || "A").slice(0, 1).toUpperCase()}
                   </span>
                 )}
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{p.profiles?.full_name || "Asá member"}</p>
-                  <p className="truncate text-xs text-muted-foreground">{p.profiles?.profession || (p.profiles?.username ? `@${p.profiles.username}` : "Member")}</p>
+                  <p className="truncate text-sm font-semibold">{p.author?.full_name || "Asá member"}</p>
+                  <p className="truncate text-xs text-muted-foreground">{p.author?.profession || (p.author?.username ? `@${p.author.username}` : "Member")}</p>
                 </div>
               </div>
               <p className="mt-4 line-clamp-4 text-sm text-muted-foreground">{p.content}</p>
@@ -407,14 +407,14 @@ function Reviews({ reviews, loading }: { reviews: ReviewRow[]; loading: boolean 
                 </div>
                 {r.comment && <p className="mt-3 text-sm text-muted-foreground">{r.comment}</p>}
                 <div className="mt-5 flex min-w-0 items-center gap-3 border-t border-border pt-4">
-                  {r.profiles?.avatar_url ? (
-                    <img src={r.profiles.avatar_url} alt="" loading="lazy" className="h-9 w-9 shrink-0 rounded-full object-cover" />
+                  {r.author?.avatar_url ? (
+                    <img src={r.author.avatar_url} alt="" loading="lazy" className="h-9 w-9 shrink-0 rounded-full object-cover" />
                   ) : (
                     <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary-soft text-xs font-bold text-primary">
-                      {(r.profiles?.full_name || "A").slice(0, 1).toUpperCase()}
+                      {(r.author?.full_name || "A").slice(0, 1).toUpperCase()}
                     </span>
                   )}
-                  <p className="truncate text-sm font-semibold">{r.profiles?.full_name || "Asá customer"}</p>
+                  <p className="truncate text-sm font-semibold">{r.author?.full_name || "Asá customer"}</p>
                 </div>
               </div>
             ))}
