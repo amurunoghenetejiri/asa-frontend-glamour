@@ -54,8 +54,28 @@ function ApplyPage() {
       status: "pending" as const,
     };
     const { error } = await supabase.from("provider_applications").upsert(payload, { onConflict: "user_id" });
+    if (error) {
+      setSaving(false);
+      return toast.error(error.message);
+    }
+
+    await supabase
+      .from("profiles")
+      .update({
+        verification_status: "pending",
+        phone: form.phone || null,
+        state: form.state || null,
+        city: form.city || null,
+        address: form.address || null,
+        profession: form.profession || null,
+        professional_title: form.business_name || null,
+        bio: form.bio || null,
+        years_experience: form.years_experience ? Number(form.years_experience) : null,
+        hourly_rate: form.hourly_rate ? Number(form.hourly_rate) : null,
+      })
+      .eq("id", user.id);
+
     setSaving(false);
-    if (error) return toast.error(error.message);
     toast.success("Application submitted! We'll review within 24 hours.");
     navigate({ to: "/dashboard" });
   };
