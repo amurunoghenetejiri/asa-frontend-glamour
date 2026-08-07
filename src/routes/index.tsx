@@ -151,7 +151,11 @@ function Hero({ stats, avatars }: { stats: Stats; avatars: ProviderCardData[] })
           </p>
 
           <div className="mt-7 rounded-2xl border border-border bg-card p-2 shadow-soft">
-            <div className="grid gap-2 sm:grid-cols-[1.3fr_1fr_auto]">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <div className="relative min-w-0 flex-1">
+                <span className="hidden" />
+              </div>
+
               <div className="relative">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
