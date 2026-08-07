@@ -45,18 +45,28 @@ function Home() {
         supabase.from("categories").select("id, slug, name, icon, description").eq("is_active", true).order("sort_order").limit(12),
         supabase.from("profiles").select("id, full_name, avatar_url, cover_url, profession, city, state, years_experience, hourly_rate, verification_status").eq("is_provider", true).order("created_at", { ascending: false }).limit(8),
         supabase.from("profiles").select("id, full_name, avatar_url, cover_url, profession, city, state, years_experience, verification_status").eq("is_provider", true).order("created_at", { ascending: false }).limit(4),
-        supabase.from("posts").select("id, content, created_at, profiles:user_id(full_name, username, avatar_url, profession)").order("created_at", { ascending: false }).limit(3),
-        supabase.from("reviews").select("id, rating, comment, created_at, profiles:author_id(full_name, avatar_url)").order("created_at", { ascending: false }).limit(3),
+        supabase.from("posts").select("id, content, created_at, user_id").not("content", "is", null).order("created_at", { ascending: false }).limit(3),
+        supabase.from("reviews").select("id, rating, comment, created_at, author_id").order("created_at", { ascending: false }).limit(3),
         supabase.from("profiles").select("id", { count: "exact", head: true }),
         supabase.from("profiles").select("id", { count: "exact", head: true }).eq("is_provider", true),
         supabase.from("categories").select("id", { count: "exact", head: true }).eq("is_active", true),
       ]);
 
+      const rawPosts = (postRes.data ?? []) as { id: string; content: string | null; created_at: string; user_id: string }[];
+      const rawReviews = (reviewRes.data ?? []) as { id: string; rating: number; comment: string | null; created_at: string; author_id: string }[];
+      const authorIds = [...new Set([...rawPosts.map((p) => p.user_id), ...rawReviews.map((r) => r.author_id)])];
+      const authors = new Map<string, Author>();
+      if (authorIds.length) {
+        const { data } = await supabase.from("profiles").select("id, full_name, username, avatar_url, profession").in("id", authorIds);
+        (data ?? []).forEach((a) => authors.set(a.id, a as Author));
+      }
+
       setCategories((cats.data as Category[]) ?? []);
       setProviders(toCards(provs.data ?? []));
       setRecent(toCards(recentProvs.data ?? []));
-      setPosts(((postRes.data ?? []) as unknown as PostRow[]).filter((p) => p.content));
-      setReviews(((reviewRes.data ?? []) as unknown as ReviewRow[]));
+      setPosts(rawPosts.filter((p) => p.content).map((p) => ({ ...p, author: authors.get(p.user_id) ?? null })));
+      setReviews(rawReviews.map((r) => ({ ...r, author: authors.get(r.author_id) ?? null })));
+
       const stateSet = new Set(((provs.data ?? []) as { state: string | null }[]).map((p) => p.state).filter(Boolean));
       setStats({
         providers: providerCount.count ?? 0,
