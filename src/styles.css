@@ -101,7 +101,10 @@
   --accent-foreground: oklch(0.88 0.1 88);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
+  --surface: oklch(0.19 0.025 160);
+  --primary-soft: oklch(0.28 0.05 158);
 }
+
 
 @layer base {
   * { border-color: var(--color-border); }
