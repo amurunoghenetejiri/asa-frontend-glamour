@@ -74,4 +74,4 @@ function BecomeProviderPage() {
       </section>
     </PublicLayout>
   );
-        }
+}
