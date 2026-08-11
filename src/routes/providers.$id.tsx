@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  CheckCircle2, MapPin, Star, MessageCircle, Calendar, Award, Briefcase, Loader2,
+  CheckCircle2, MapPin, Star, Calendar, Award, Briefcase, Loader2, MessageCircle,
 } from "lucide-react";
 import { PublicLayout } from "../components/site/PublicLayout";
 import { Avatar, SignedImg } from "@/components/social/media";
+import { BookNowButton, MessageButton } from "@/components/site/HireActions";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/providers/$id")({
@@ -101,8 +102,7 @@ function ProviderPage() {
           .limit(10),
       ]);
 
-      const portItems = (port as PortfolioItem[]) ?? [];
-      setPortfolio(portItems);
+      setPortfolio((port as PortfolioItem[]) ?? []);
 
       const rawRevs = (revs as ReviewRow[]) ?? [];
       const authorIds = [...new Set(rawRevs.map((r) => r.author_id))];
@@ -142,6 +142,14 @@ function ProviderPage() {
   const price = profile.hourly_rate
     ? `₦${Number(profile.hourly_rate).toLocaleString()}/hr`
     : null;
+
+  const hireTarget = {
+    id: profile.id,
+    name,
+    avatar_url: profile.avatar_url,
+    profession,
+    hourly_rate: profile.hourly_rate,
+  };
 
   return (
     <PublicLayout>
@@ -191,18 +199,18 @@ function ProviderPage() {
               </div>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Link
-                to="/dashboard/messages"
+              <MessageButton
+                provider={hireTarget}
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-3 text-sm font-semibold hover:bg-muted"
               >
                 <MessageCircle className="h-4 w-4" /> Message
-              </Link>
-              <button
-                type="button"
+              </MessageButton>
+              <BookNowButton
+                provider={hireTarget}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow hover:opacity-90"
               >
                 <Calendar className="h-4 w-4" /> Book now
-              </button>
+              </BookNowButton>
             </div>
           </div>
         </div>
@@ -234,11 +242,7 @@ function ProviderPage() {
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {portfolio.map((item) => (
                     <div key={item.id} className="aspect-square overflow-hidden rounded-2xl border border-border bg-muted">
-                      {item.media_type === "video" ? (
-                        <SignedImg src={item.media_url} alt={item.title || ""} className="h-full w-full object-cover" />
-                      ) : (
-                        <SignedImg src={item.media_url} alt={item.title || ""} className="h-full w-full object-cover" />
-                      )}
+                      <SignedImg src={item.media_url} alt={item.title || ""} className="h-full w-full object-cover" />
                     </div>
                   ))}
                 </div>
@@ -275,18 +279,24 @@ function ProviderPage() {
             <div className="rounded-3xl border border-border bg-card p-6">
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Starting price</p>
               <p className="mt-1 font-display text-3xl font-bold text-primary">{price || "Contact for quote"}</p>
-              <button
-                type="button"
+              <BookNowButton
+                provider={hireTarget}
                 className="mt-5 w-full rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground hover:opacity-90"
               >
                 Book now
-              </button>
+              </BookNowButton>
+              <MessageButton
+                provider={hireTarget}
+                className="mt-2 w-full rounded-full border border-border py-3 text-sm font-semibold hover:bg-muted"
+              >
+                Message provider
+              </MessageButton>
             </div>
             <div className="rounded-3xl border border-border bg-card p-6 text-sm text-muted-foreground">
               <p className="mb-2 inline-flex items-center gap-2 font-semibold text-foreground">
                 <Briefcase className="h-4 w-4 text-primary" /> Provider on Asá
               </p>
-              <p>Hire verified professionals and message them securely on the platform.</p>
+              <p>Hire professionals and message them securely on the platform.</p>
             </div>
           </aside>
         </div>
