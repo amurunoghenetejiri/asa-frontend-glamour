@@ -46,6 +46,7 @@ function toCard(r: ProfileRow): ProviderCardData {
     reviews: null,
     price: r.hourly_rate ? "₦" + Number(r.hourly_rate).toLocaleString() + "/hr" : null,
     years: r.years_experience ?? null,
+    hourly_rate: r.hourly_rate,
   };
 }
 
