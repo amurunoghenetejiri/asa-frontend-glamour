@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin, Star, BadgeCheck, Sparkles } from "lucide-react";
 import { Avatar, SignedImg } from "@/components/social/media";
+import { HireNowButton } from "./HireActions";
 
 export type ProviderCardData = {
   id: string;
@@ -14,6 +15,7 @@ export type ProviderCardData = {
   reviews?: number | null;
   price?: string | null;
   years?: number | null;
+  hourly_rate?: number | null;
 };
 
 export function ProviderCard({ p, compact = false }: { p: ProviderCardData; compact?: boolean }) {
@@ -83,13 +85,16 @@ export function ProviderCard({ p, compact = false }: { p: ProviderCardData; comp
           </div>
         )}
 
-        <Link
-          to="/providers/$id"
-          params={{ id: p.id }}
+        <HireNowButton
+          provider={{
+            id: p.id,
+            name: p.name,
+            avatar_url: p.avatar_url,
+            profession: p.profession,
+            hourly_rate: p.hourly_rate ?? null,
+          }}
           className="btn-primary mt-4 w-full px-4 py-2.5 text-sm"
-        >
-          Hire Now
-        </Link>
+        />
       </div>
     </article>
   );
