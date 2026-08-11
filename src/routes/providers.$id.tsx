@@ -1,7 +1,14 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  CheckCircle2, MapPin, Star, Calendar, Award, Briefcase, Loader2, MessageCircle,
+  CheckCircle2,
+  MapPin,
+  Star,
+  Calendar,
+  Award,
+  Briefcase,
+  Loader2,
+  MessageCircle,
 } from "lucide-react";
 import { PublicLayout } from "../components/site/PublicLayout";
 import { Avatar, SignedImg } from "@/components/social/media";
@@ -13,16 +20,6 @@ export const Route = createFileRoute("/providers/$id")({
   head: () => ({
     meta: [{ title: "Provider — Asá" }, { name: "description", content: "View provider profile on Asá." }],
   }),
-  notFoundComponent: () => (
-    <PublicLayout>
-      <div className="mx-auto max-w-xl px-4 py-32 text-center">
-        <h1 className="font-display text-3xl font-bold">Provider not found</h1>
-        <Link to="/find-professionals" className="mt-6 inline-block text-primary hover:underline">
-          Browse providers →
-        </Link>
-      </div>
-    </PublicLayout>
-  ),
   component: ProviderPage,
 });
 
@@ -69,50 +66,57 @@ function ProviderPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(
-          "id, full_name, avatar_url, cover_url, profession, professional_title, bio, city, state, years_experience, hourly_rate, verification_status, is_provider, skills",
-        )
-        .eq("id", id)
-        .maybeSingle();
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from("profiles")
+          .select(
+            "id, full_name, avatar_url, cover_url, profession, professional_title, bio, city, state, years_experience, hourly_rate, verification_status, is_provider, skills",
+          )
+          .eq("id", id)
+          .maybeSingle();
 
-      if (cancelled) return;
-      if (error || !data || !data.is_provider) {
-        setMissing(true);
-        setLoading(false);
-        return;
+        if (cancelled) return;
+        if (error || !data || !data.is_provider) {
+          setMissing(true);
+          setLoading(false);
+          return;
+        }
+
+        setProfile(data as Profile);
+
+        const [{ data: port }, { data: revs }] = await Promise.all([
+          supabase
+            .from("portfolio_items")
+            .select("id, title, media_url, media_type")
+            .eq("user_id", id)
+            .order("sort_order")
+            .limit(12),
+          supabase
+            .from("reviews")
+            .select("id, rating, comment, created_at, author_id")
+            .eq("provider_id", id)
+            .order("created_at", { ascending: false })
+            .limit(10),
+        ]);
+
+        if (cancelled) return;
+        setPortfolio((port as PortfolioItem[]) ?? []);
+
+        const rawRevs = (revs as ReviewRow[]) ?? [];
+        const authorIds = [...new Set(rawRevs.map((r) => r.author_id))];
+        const names = new Map<string, string | null>();
+        if (authorIds.length) {
+          const { data: authors } = await supabase.from("profiles").select("id, full_name").in("id", authorIds);
+          (authors ?? []).forEach((a: { id: string; full_name: string | null }) => names.set(a.id, a.full_name));
+        }
+        setReviews(rawRevs.map((r) => ({ ...r, author_name: names.get(r.author_id) ?? null })));
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setMissing(true);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-
-      setProfile(data as Profile);
-
-      const [{ data: port }, { data: revs }] = await Promise.all([
-        supabase
-          .from("portfolio_items")
-          .select("id, title, media_url, media_type")
-          .eq("user_id", id)
-          .order("sort_order")
-          .limit(12),
-        supabase
-          .from("reviews")
-          .select("id, rating, comment, created_at, author_id")
-          .eq("provider_id", id)
-          .order("created_at", { ascending: false })
-          .limit(10),
-      ]);
-
-      setPortfolio((port as PortfolioItem[]) ?? []);
-
-      const rawRevs = (revs as ReviewRow[]) ?? [];
-      const authorIds = [...new Set(rawRevs.map((r) => r.author_id))];
-      const names = new Map<string, string | null>();
-      if (authorIds.length) {
-        const { data: authors } = await supabase.from("profiles").select("id, full_name").in("id", authorIds);
-        (authors ?? []).forEach((a: { id: string; full_name: string | null }) => names.set(a.id, a.full_name));
-      }
-      setReviews(rawRevs.map((r) => ({ ...r, author_name: names.get(r.author_id) ?? null })));
-      setLoading(false);
     })();
     return () => {
       cancelled = true;
@@ -130,7 +134,16 @@ function ProviderPage() {
   }
 
   if (missing || !profile) {
-    throw notFound();
+    return (
+      <PublicLayout>
+        <div className="mx-auto max-w-xl px-4 py-32 text-center">
+          <h1 className="font-display text-3xl font-bold">Provider not found</h1>
+          <Link to="/find-professionals" className="mt-6 inline-block text-primary hover:underline">
+            Browse providers →
+          </Link>
+        </div>
+      </PublicLayout>
+    );
   }
 
   const name = profile.full_name || "Asá Provider";
@@ -165,7 +178,7 @@ function ProviderPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="-mt-20 rounded-3xl border border-border bg-card p-6 shadow-lg sm:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end">
-            <div className="rounded-3xl border-4 border-card shadow-md">
+            <div className="overflow-hidden rounded-3xl border-4 border-card shadow-md">
               <Avatar src={profile.avatar_url} name={name} size={120} className="!rounded-3xl" />
             </div>
             <div className="min-w-0 flex-1">
@@ -227,7 +240,10 @@ function ProviderPage() {
               <Section title="Skills">
                 <div className="flex flex-wrap gap-2">
                   {profile.skills!.map((s) => (
-                    <span key={s} className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-medium">
+                    <span
+                      key={s}
+                      className="rounded-full border border-border bg-muted/50 px-3.5 py-1.5 text-xs font-medium"
+                    >
                       {s}
                     </span>
                   ))}
@@ -241,8 +257,15 @@ function ProviderPage() {
               ) : (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {portfolio.map((item) => (
-                    <div key={item.id} className="aspect-square overflow-hidden rounded-2xl border border-border bg-muted">
-                      <SignedImg src={item.media_url} alt={item.title || ""} className="h-full w-full object-cover" />
+                    <div
+                      key={item.id}
+                      className="aspect-square overflow-hidden rounded-2xl border border-border bg-muted"
+                    >
+                      <SignedImg
+                        src={item.media_url}
+                        alt={item.title || ""}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                   ))}
                 </div>
