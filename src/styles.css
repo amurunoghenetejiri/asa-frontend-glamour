@@ -1,6 +1,9 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
+
+/* Scan app source for class names */
+@source "./**/*.{js,ts,jsx,tsx}";
+@source "../src/**/*.{js,ts,jsx,tsx}";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -43,21 +46,20 @@
   --color-primary-soft: var(--primary-soft);
 }
 
-
 :root {
   --radius: 1rem;
 
   /* Brand — Asá */
-  --background: oklch(0.995 0 0);                /* clean white */
-  --surface: oklch(0.972 0.002 250);             /* light gray section bg */
+  --background: oklch(0.995 0 0);
+  --surface: oklch(0.972 0.002 250);
   --foreground: oklch(0.19 0.02 160);
 
-  --primary: oklch(0.42 0.10 158);               /* dark leaf green */
+  --primary: oklch(0.42 0.10 158);
   --primary-foreground: oklch(0.99 0.005 90);
   --primary-glow: oklch(0.56 0.12 158);
   --primary-soft: oklch(0.95 0.03 158);
 
-  --gold: oklch(0.78 0.13 82);                   /* metallic gold */
+  --gold: oklch(0.78 0.13 82);
   --gold-light: oklch(0.88 0.10 88);
   --gold-dark: oklch(0.62 0.13 72);
 
@@ -83,7 +85,6 @@
   --shadow-lift: 0 2px 4px oklch(0.2 0.02 160 / 0.04), 0 24px 48px -24px oklch(0.2 0.02 160 / 0.22);
 }
 
-
 .dark {
   --background: oklch(0.16 0.02 160);
   --foreground: oklch(0.98 0.005 90);
@@ -104,7 +105,6 @@
   --surface: oklch(0.19 0.025 160);
   --primary-soft: oklch(0.28 0.05 158);
 }
-
 
 @layer base {
   * { border-color: var(--color-border); }
@@ -211,7 +211,6 @@
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
   &:focus { background: var(--card); border-color: color-mix(in oklab, var(--primary) 45%, transparent); box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 12%, transparent); }
 }
-
 
 /* Splash: SVG stroke draw for "Asá" */
 @keyframes draw-asa {
