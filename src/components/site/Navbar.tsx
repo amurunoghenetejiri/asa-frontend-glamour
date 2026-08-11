@@ -6,6 +6,13 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { GlobalSearchButton } from "./GlobalSearch";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const NAV = [
   { to: "/", label: "Home", icon: Home },
@@ -37,8 +44,6 @@ const DASH_ROUTE: Record<string, string> = {
 
 export function Navbar() {
   const [drawer, setDrawer] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
   const { user, profile, activeMode, signOut } = useAuth();
   const navigate = useNavigate();
   const dashTo = DASH_ROUTE[activeMode] ?? "/dashboard";
@@ -51,7 +56,6 @@ export function Navbar() {
 
   const handleSignOut = async () => {
     await signOut();
-    setMenuOpen(false);
     setDrawer(false);
     navigate({ to: "/" });
   };
@@ -78,44 +82,71 @@ export function Navbar() {
               {i.label}
             </Link>
           ))}
-          <div className="relative" onMouseLeave={() => setMoreOpen(false)}>
-            <button
-              onClick={() => setMoreOpen((s) => !s)}
-              onMouseEnter={() => setMoreOpen(true)}
-              className="inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-muted hover:text-primary"
-            >
-              More <ChevronDown className="h-3.5 w-3.5" />
-            </button>
-            {moreOpen && (
-              <div className="animate-scale-in-soft absolute left-0 top-full w-60 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-lift">
-                {MORE.map((m) => (
-                  <Link key={m.to} to={m.to} onClick={() => setMoreOpen(false)} className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm transition hover:bg-muted">
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-foreground/70 outline-none transition-colors hover:bg-muted hover:text-primary data-[state=open]:bg-muted data-[state=open]:text-primary"
+              >
+                More <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" sideOffset={8} className="w-60 rounded-2xl border border-border bg-popover p-1.5 shadow-lift">
+              {MORE.map((m) => (
+                <DropdownMenuItem key={m.to} asChild className="cursor-pointer rounded-xl px-3 py-2.5 text-sm focus:bg-muted">
+                  <Link to={m.to} className="flex items-center gap-2.5">
                     <m.icon className="h-4 w-4 text-primary" /> {m.label}
                   </Link>
-                ))}
-              </div>
-            )}
-          </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
           <GlobalSearchButton />
           {user ? (
-            <div className="relative">
-              <button onClick={() => setMenuOpen((s) => !s)} className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-4 text-sm font-medium transition hover:bg-muted">
-                {profile?.avatar_url ? <img src={profile.avatar_url} className="h-7 w-7 rounded-full object-cover" alt="" /> : <div className="grid h-7 w-7 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{initials}</div>}
-                <span className="max-w-[120px] truncate">{profile?.full_name?.split(" ")[0] || user.email?.split("@")[0]}</span>
-              </button>
-              {menuOpen && (
-                <div className="animate-scale-in-soft absolute right-0 mt-2 w-60 overflow-hidden rounded-2xl border border-border bg-popover p-1.5 shadow-lift">
-                  <Link to={dashTo as never} onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm hover:bg-muted"><LayoutDashboard className="h-4 w-4 text-primary" /> Dashboard</Link>
-                  {ACCOUNT.map((a) => (
-                    <Link key={a.to} to={a.to} onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm hover:bg-muted"><a.icon className="h-4 w-4 text-primary" /> {a.label}</Link>
-                  ))}
-                  <button onClick={handleSignOut} className="mt-1 flex w-full items-center gap-2.5 rounded-xl border-t border-border px-3 py-2.5 text-left text-sm text-destructive hover:bg-muted"><LogOut className="h-4 w-4" /> Log out</button>
-                </div>
-              )}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-4 text-sm font-medium outline-none transition hover:bg-muted data-[state=open]:bg-muted"
+                >
+                  {profile?.avatar_url ? (
+                    <img src={profile.avatar_url} className="h-7 w-7 rounded-full object-cover" alt="" />
+                  ) : (
+                    <div className="grid h-7 w-7 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{initials}</div>
+                  )}
+                  <span className="max-w-[120px] truncate">{profile?.full_name?.split(" ")[0] || user.email?.split("@")[0]}</span>
+                  <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" sideOffset={8} className="w-60 rounded-2xl border border-border bg-popover p-1.5 shadow-lift">
+                <DropdownMenuItem asChild className="cursor-pointer rounded-xl px-3 py-2.5 text-sm focus:bg-muted">
+                  <Link to={dashTo as never} className="flex items-center gap-2.5">
+                    <LayoutDashboard className="h-4 w-4 text-primary" /> Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                {ACCOUNT.map((a) => (
+                  <DropdownMenuItem key={a.to} asChild className="cursor-pointer rounded-xl px-3 py-2.5 text-sm focus:bg-muted">
+                    <Link to={a.to} className="flex items-center gap-2.5">
+                      <a.icon className="h-4 w-4 text-primary" /> {a.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator className="my-1" />
+                <DropdownMenuItem
+                  onSelect={(e) => {
+                    e.preventDefault();
+                    void handleSignOut();
+                  }}
+                  className="cursor-pointer rounded-xl px-3 py-2.5 text-sm text-destructive focus:bg-muted focus:text-destructive"
+                >
+                  <LogOut className="h-4 w-4" /> Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <>
               <Link to="/login" className="btn-ghost px-5 py-2 text-sm">Login</Link>
