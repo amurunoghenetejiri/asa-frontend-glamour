@@ -78,7 +78,6 @@ function FindPros() {
           "id, full_name, avatar_url, cover_url, profession, professional_title, city, state, years_experience, hourly_rate, verification_status",
         )
         .eq("is_provider", true)
-        .eq("verification_status", "verified")
         .order("created_at", { ascending: false })
         .limit(100);
 
@@ -109,7 +108,11 @@ function FindPros() {
         .join(" ")
         .toLowerCase();
       if (term && !hay.includes(term)) return false;
-      if (cat && !(r.profession || "").toLowerCase().includes(cat) && !(r.professional_title || "").toLowerCase().includes(cat)) {
+      if (
+        cat &&
+        !(r.profession || "").toLowerCase().includes(cat) &&
+        !(r.professional_title || "").toLowerCase().includes(cat)
+      ) {
         return false;
       }
       return true;
@@ -158,9 +161,6 @@ function FindPros() {
             <button
               type="button"
               className="h-12 rounded-2xl bg-gold px-6 text-sm font-semibold text-[#3a2b06] hover:brightness-110"
-              onClick={() => {
-                /* filters already live */
-              }}
             >
               Search
             </button>
@@ -253,4 +253,4 @@ function FindPros() {
       </div>
     </PublicLayout>
   );
-      }
+}
