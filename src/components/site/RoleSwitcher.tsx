@@ -1,7 +1,13 @@
 import { useAuth, type AppRole } from "@/hooks/use-auth";
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const LABELS: Record<AppRole, string> = {
   customer: "Customer Mode",
@@ -21,35 +27,37 @@ const ROUTES: Record<AppRole, string> = {
 
 export function RoleSwitcher() {
   const { roles, activeMode, setActiveMode } = useAuth();
-  const [open, setOpen] = useState(false);
   if (roles.length <= 1) return null;
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setOpen((s) => !s)}
-        className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold hover:bg-muted"
-      >
-        <span className="inline-block h-2 w-2 rounded-full bg-primary" />
-        {LABELS[activeMode]}
-        <ChevronDown className="h-3.5 w-3.5" />
-      </button>
-      {open && (
-        <div className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
-          <div className="border-b border-border px-4 py-2 text-[10px] uppercase tracking-widest text-muted-foreground">Switch mode</div>
-          {roles.map((r) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold outline-none hover:bg-muted data-[state=open]:bg-muted"
+        >
+          <span className="inline-block h-2 w-2 rounded-full bg-primary" />
+          {LABELS[activeMode]}
+          <ChevronDown className="h-3.5 w-3.5" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" sideOffset={8} className="w-56 rounded-2xl border border-border bg-card p-0 shadow-xl">
+        <DropdownMenuLabel className="border-b border-border px-4 py-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          Switch mode
+        </DropdownMenuLabel>
+        {roles.map((r) => (
+          <DropdownMenuItem key={r} asChild className="cursor-pointer rounded-none px-4 py-2.5 text-sm focus:bg-muted">
             <Link
-              key={r}
               to={ROUTES[r]}
-              onClick={() => { setActiveMode(r); setOpen(false); }}
-              className="flex items-center justify-between px-4 py-2.5 text-sm hover:bg-muted"
+              onClick={() => setActiveMode(r)}
+              className="flex items-center justify-between"
             >
               <span>{LABELS[r]}</span>
               {activeMode === r && <Check className="h-4 w-4 text-primary" />}
             </Link>
-          ))}
-        </div>
-      )}
-    </div>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
